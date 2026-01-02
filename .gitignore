@@ -5,6 +5,9 @@
 *.userosscache
 *.sln.docstates
 
+# Kiro files
+.kiro/
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
