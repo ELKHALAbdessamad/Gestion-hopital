@@ -1,0 +1,128 @@
+﻿@model HospitalManagement.Models.RendezVous
+@{
+    ViewData["Title"] = "Modifier le Rendez-Vous";
+}
+
+<h2>@ViewData["Title"]</h2>
+<link rel="stylesheet" href="~/css/rdv-forms-style.css" />
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="DateCreation" />
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="PatientId" class="form-label">Patient <span class="text-danger">*</span></label>
+                <select asp-for="PatientId" class="form-select" required>
+                    <option value="">-- Sélectionner un patient --</option>
+                    @foreach (var patient in ViewBag.Patients ?? new List<object>())
+                    {
+                        if (patient.Id == Model.PatientId)
+                        {
+                            <option value="@patient.Id" selected>@patient.Nom @patient.Prenom</option>
+                        }
+                        else
+                        {
+                            <option value="@patient.Id">@patient.Nom @patient.Prenom</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="PatientId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="MedecinId" class="form-label">Médecin <span class="text-danger">*</span></label>
+                <select asp-for="MedecinId" class="form-select" required>
+                    <option value="">-- Sélectionner un médecin --</option>
+                    @foreach (var medecin in ViewBag.Medecins ?? new List<object>())
+                    {
+                        if (medecin.Id == Model.MedecinId)
+                        {
+                            <option value="@medecin.Id" selected>Dr. @medecin.Nom @medecin.Prenom (@medecin.Specialite)</option>
+                        }
+                        else
+                        {
+                            <option value="@medecin.Id">Dr. @medecin.Nom @medecin.Prenom (@medecin.Specialite)</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="MedecinId" class="text-danger"></span>
+            </div>
+
+            <!-- ✅ Date et Heure séparées -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="DateRendezVous" class="form-label">Date <span class="text-danger">*</span></label>
+                        <input type="date" 
+                               id="DateRendezVous" 
+                               name="DateRendezVous" 
+                               class="form-control" 
+                               value="@ViewBag.DateRendezVousSaisie"
+                               required />
+                        <small class="form-text text-muted">Format: AAAA-MM-JJ</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="HeureRendezVous" class="form-label">Heure <span class="text-danger">*</span></label>
+                        <input type="time" 
+                               id="HeureRendezVous" 
+                               name="HeureRendezVous" 
+                               class="form-control" 
+                               value="@ViewBag.HeureRendezVousSaisie"
+                               required />
+                        <small class="form-text text-muted">Format: HH:mm</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Statut" class="form-label">Statut <span class="text-danger">*</span></label>
+                <select asp-for="Statut" class="form-select" required>
+                    <option value="Planifié">Planifié</option>
+                    <option value="Confirmé">Confirmé</option>
+                    <option value="En cours">En cours</option>
+                    <option value="Terminé">Terminé</option>
+                    <option value="Annulé">Annulé</option>
+                </select>
+                <span asp-validation-for="Statut" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Duree" class="form-label">Durée (minutes)</label>
+                <input asp-for="Duree" type="number" class="form-control" min="15" max="180" />
+                <span asp-validation-for="Duree" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Motif" class="form-label">Motif</label>
+                <textarea asp-for="Motif" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Motif" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Notes" class="form-label">Notes</label>
+                <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Enregistrer
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

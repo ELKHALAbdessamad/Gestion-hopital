@@ -1,0 +1,181 @@
+@{
+    ViewData["Title"] = "Accueil - Hôpital Cœur & Santé";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/welcome.css" />
+}
+
+<!-- Hero Carousel -->
+<div class="hero-carousel">
+    <div class="carousel-slide active" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1200&h=500&fit=crop');">
+        <div class="carousel-content">
+            <h2>Bienvenue à Hôpital Cœur & Santé</h2>
+            <p>Votre santé est notre priorité</p>
+        </div>
+    </div>
+    <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1631217314830-4e5b85b80c69?w=1200&h=500&fit=crop');">
+        <div class="carousel-content">
+            <h2>Services Médicaux de Qualité</h2>
+            <p>Équipements modernes et personnel qualifié</p>
+        </div>
+    </div>
+    <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1579154204601-01d82b27c9d1?w=1200&h=500&fit=crop');">
+        <div class="carousel-content">
+            <h2>Soins Personnalisés</h2>
+            <p>Une approche centrée sur le patient</p>
+        </div>
+    </div>
+
+    <button class="carousel-arrow prev" onclick="previousSlide()">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="carousel-arrow next" onclick="nextSlide()">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <div class="carousel-controls">
+        <div class="carousel-dot active" onclick="goToSlide(0)"></div>
+        <div class="carousel-dot" onclick="goToSlide(1)"></div>
+        <div class="carousel-dot" onclick="goToSlide(2)"></div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="quick-actions-section">
+    <div class="quick-actions-grid">
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <h3>Trouver un Médecin</h3>
+            <p>Consultez notre annuaire de médecins spécialisés</p>
+            <a href="/Medecins" class="action-link">Voir plus <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <h3>Prendre un Rendez-vous</h3>
+            <p>Réservez votre consultation en ligne</p>
+            <a href="/RendezVous/Create" class="action-link">Réserver <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-hospital"></i>
+            </div>
+            <h3>Nos Services</h3>
+            <p>Découvrez tous nos services médicaux</p>
+            <a href="/Home/Specialties" class="action-link">Explorer <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">
+                <i class="fas fa-phone"></i>
+            </div>
+            <h3>Nous Contacter</h3>
+            <p>Besoin d'aide ? Contactez-nous</p>
+            <a href="tel:+212612345678" class="action-link">Appeler <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="stats-section">
+    <h2>Nos Chiffres</h2>
+    <div class="stats-grid">
+        <div class="stat-item">
+            <div class="stat-icon">
+                <i class="fas fa-hospital"></i>
+            </div>
+            <div class="stat-number" data-target="15">0</div>
+            <div class="stat-label">Établissements</div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-icon">
+                <i class="fas fa-user-md"></i>
+            </div>
+            <div class="stat-number" data-target="250">0</div>
+            <div class="stat-label">Médecins</div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-number" data-target="50000">0</div>
+            <div class="stat-label">Patients</div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-number" data-target="10000">0</div>
+            <div class="stat-label">Rendez-vous/Mois</div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-number">4.8</div>
+            <div class="stat-label">Satisfaction</div>
+        </div>
+
+        <div class="stat-item">
+            <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Urgences</div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <h2 style="text-align: center; margin-bottom: 2rem; color: var(--dark); font-size: 2rem;">Nos Services Principaux</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-image" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=250&fit=crop');"></div>
+            <div class="feature-content">
+                <h3>Consultations Générales</h3>
+                <p>Consultations médicales générales avec nos médecins expérimentés</p>
+                <a href="/Services" class="action-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-image" style="background-image: url('https://images.unsplash.com/photo-1631217314830-4e5b85b80c69?w=400&h=250&fit=crop');"></div>
+            <div class="feature-content">
+                <h3>Urgences 24/7</h3>
+                <p>Service d'urgence disponible 24 heures sur 24, 7 jours sur 7</p>
+                <a href="/Services" class="action-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-image" style="background-image: url('https://images.unsplash.com/photo-1579154204601-01d82b27c9d1?w=400&h=250&fit=crop');"></div>
+            <div class="feature-content">
+                <h3>Chirurgie Spécialisée</h3>
+                <p>Interventions chirurgicales avec les meilleures techniques</p>
+                <a href="/Services" class="action-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="cta-section">
+    <h2>Prêt à Prendre Soin de Votre Santé ?</h2>
+    <p>Rejoignez des milliers de patients satisfaits qui nous font confiance</p>
+    <a href="/Account/Register" class="cta-button">S'inscrire Maintenant</a>
+</div>
+
+@section Scripts {
+}

@@ -1,0 +1,96 @@
+﻿@model HospitalManagement.Models.Patient
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Créer un Patient</h2>
+
+    <form asp-action="Create" method="post">
+
+        <!-- Nom -->
+        <div class="mb-3">
+            <label asp-for="Nom" class="form-label">
+                <i class="fas fa-user"></i> Nom
+            </label>
+            <input asp-for="Nom" class="form-control" required />
+            <span asp-validation-for="Nom" class="text-danger"></span>
+        </div>
+
+        <!-- Prénom -->
+        <div class="mb-3">
+            <label asp-for="Prenom" class="form-label">
+                <i class="fas fa-user"></i> Prénom
+            </label>
+            <input asp-for="Prenom" class="form-control" required />
+            <span asp-validation-for="Prenom" class="text-danger"></span>
+        </div>
+
+        <!-- Date de Naissance + Sexe -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="DateNaissance" class="form-label">
+                        <i class="fas fa-birthday-cake"></i> Date de Naissance <span class="text-danger">*</span>
+                    </label>
+
+                    <input type="date"
+                           asp-for="DateNaissance"
+                           class="form-control"
+                           value="@Model.DateNaissance.ToString("yyyy-MM-dd")"
+                           required />
+
+                    <small class="form-text text-muted">Format : AAAA-MM-JJ</small>
+                    <span asp-validation-for="DateNaissance" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="Sexe" class="form-label">
+                        <i class="fas fa-venus-mars"></i> Sexe
+                    </label>
+
+                    <select asp-for="Sexe" class="form-select">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="M">Masculin</option>
+                        <option value="F">Féminin</option>
+                    </select>
+
+                    <span asp-validation-for="Sexe" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Téléphone -->
+        <div class="mb-3">
+            <label asp-for="Telephone" class="form-label">
+                <i class="fas fa-phone"></i> Téléphone
+            </label>
+            <input asp-for="Telephone" class="form-control" required />
+            <span asp-validation-for="Telephone" class="text-danger"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">
+                <i class="fas fa-envelope"></i> Email
+            </label>
+            <input asp-for="Email" class="form-control" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <!-- Adresse -->
+        <div class="mb-3">
+            <label asp-for="Adresse" class="form-label">
+                <i class="fas fa-home"></i> Adresse
+            </label>
+            <input asp-for="Adresse" class="form-control" />
+            <span asp-validation-for="Adresse" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Enregistrer
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+
+    </form>
+</div>

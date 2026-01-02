@@ -1,0 +1,187 @@
+﻿@model HospitalManagement.Models.Patient
+@{
+    ViewData["Title"] = "Modifier le Patient";
+}
+
+@section Styles {
+    <style>
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .form-actions .btn {
+            flex: 1;
+        }
+
+        .info-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .info-box i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+    </style>
+}
+
+<!-- Page Header -->
+<div class="page-header">
+    <h1><i class="fas fa-user-edit"></i> Modifier le Patient</h1>
+    <p>Mettez à jour les informations du patient</p>
+</div>
+
+<div class="form-container">
+    <div class="form-card">
+
+        <!-- Info Box -->
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            <strong>Patient ID:</strong> @Model.Id
+        </div>
+
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="DateInscription" />
+
+            @if (ViewData.ModelState.Values.Any(v => v.Errors.Count > 0))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle"></i> Veuillez corriger les erreurs ci-dessous
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <!-- Nom & Prénom -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Nom"><i class="fas fa-user"></i> Nom</label>
+                    <input asp-for="Nom" class="form-control" />
+                    <span asp-validation-for="Nom" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Prenom"><i class="fas fa-user"></i> Prénom</label>
+                    <input asp-for="Prenom" class="form-control" />
+                    <span asp-validation-for="Prenom" class="validation-message"></span>
+                </div>
+            </div>
+
+            <!-- Date de Naissance & Sexe -->
+            <div class="form-row">
+                <!-- Date de Naissance -->
+                <div class="form-group">
+                    <label asp-for="DateNaissance" class="form-label">
+                        <i class="fas fa-birthday-cake"></i> Date de Naissance <span class="text-danger">*</span>
+                    </label>
+
+                    <input type="date"
+                           asp-for="DateNaissance"
+                           class="form-control"
+                           value="@Model.DateNaissance.ToString("yyyy-MM-dd")"
+                           required />
+
+                    <small class="form-text text-muted">Format : AAAA-MM-JJ</small>
+                    <span asp-validation-for="DateNaissance" class="validation-message"></span>
+                </div>
+
+                <!-- Sexe -->
+                <div class="form-group">
+                    <label asp-for="Sexe" class="form-label">
+                        <i class="fas fa-venus-mars"></i> Sexe
+                    </label>
+
+                    <select asp-for="Sexe" class="form-select">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="M">Masculin</option>
+                        <option value="F">Féminin</option>
+                    </select>
+
+                    <span asp-validation-for="Sexe" class="validation-message"></span>
+                </div>
+            </div>
+
+            <!-- Téléphone & Email -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Telephone"><i class="fas fa-phone"></i> Téléphone</label>
+                    <input asp-for="Telephone" class="form-control" />
+                    <span asp-validation-for="Telephone" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email"><i class="fas fa-envelope"></i> Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="validation-message"></span>
+                </div>
+            </div>
+
+            <!-- Adresse -->
+            <div class="form-row full">
+                <div class="form-group">
+                    <label asp-for="Adresse"><i class="fas fa-map-marker-alt"></i> Adresse</label>
+                    <input asp-for="Adresse" class="form-control" />
+                    <span asp-validation-for="Adresse" class="validation-message"></span>
+                </div>
+            </div>
+
+            <!-- Numéro Sécurité Sociale -->
+            <div class="form-row full">
+                <div class="form-group">
+                    <label asp-for="NumeroSecuriteSociale"><i class="fas fa-id-card"></i> Numéro de Sécurité Sociale</label>
+                    <input asp-for="NumeroSecuriteSociale" class="form-control" />
+                    <small class="form-text">Ce champ est optionnel</small>
+                    <span asp-validation-for="NumeroSecuriteSociale" class="validation-message"></span>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Enregistrer les Modifications
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

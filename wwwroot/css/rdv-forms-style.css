@@ -1,0 +1,562 @@
+﻿/* Style professionnel médical pour Create/Edit/Delete Rendez-vous */
+
+/* Couleurs rendez-vous */
+:root {
+    --rdv-primary: #00838f;
+    --rdv-secondary: #00acc1;
+    --rdv-accent: #00bcd4;
+    --rdv-success: #00a86b;
+    --rdv-danger: #e74c3c;
+    --rdv-warning: #ff9800;
+    --rdv-dark: #263238;
+    --bg-light: #e0f7fa;
+    --border-color: #b2ebf2;
+    --input-bg: #f0fdff;
+}
+
+/* Arrière-plan */
+body {
+    background: linear-gradient(135deg, #e0f7fa 0%, #f1f8ff 100%);
+    min-height: 100vh;
+    position: relative;
+}
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: repeating-linear-gradient(90deg, rgba(0, 131, 143, 0.02) 0px, transparent 1px, transparent 60px, rgba(0, 131, 143, 0.02) 61px), repeating-linear-gradient(0deg, rgba(0, 131, 143, 0.02) 0px, transparent 1px, transparent 60px, rgba(0, 131, 143, 0.02) 61px);
+        z-index: -1;
+    }
+
+/* En-tête */
+h2 {
+    color: var(--rdv-dark);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--rdv-primary);
+    position: relative;
+    display: inline-block;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+    h2::after {
+        content: '📅';
+        position: absolute;
+        right: -2.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        opacity: 0.3;
+        animation: swing 2s infinite;
+    }
+
+@keyframes swing {
+    0%, 100% {
+        transform: translateY(-50%) rotate(-5deg);
+    }
+
+    50% {
+        transform: translateY(-50%) rotate(5deg);
+    }
+}
+
+h2.text-danger::after {
+    content: '⚠️';
+    animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateY(-50%) translateX(0);
+    }
+
+    25% {
+        transform: translateY(-50%) translateX(-3px);
+    }
+
+    75% {
+        transform: translateY(-50%) translateX(3px);
+    }
+}
+
+h2::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--rdv-accent);
+    animation: expandWidth 0.6s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes expandWidth {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 60px;
+    }
+}
+
+/* Conteneur formulaire */
+.row {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.row > div[class*="col-"] {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 131, 143, 0.15);
+    border: 1px solid rgba(0, 131, 143, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+    .row > div[class*="col-"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--rdv-primary), var(--rdv-accent), var(--rdv-secondary));
+        animation: gradientMove 3s infinite;
+    }
+
+@keyframes gradientMove {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Groupes de formulaire */
+.mb-3 {
+    position: relative;
+    margin-bottom: 1.5rem;
+    animation: formGroupAppear 0.5s ease-out backwards;
+}
+
+    .mb-3:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .mb-3:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+    .mb-3:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+
+    .mb-3:nth-child(4) {
+        animation-delay: 0.25s;
+    }
+
+    .mb-3:nth-child(5) {
+        animation-delay: 0.3s;
+    }
+
+    .mb-3:nth-child(6) {
+        animation-delay: 0.35s;
+    }
+
+    .mb-3:nth-child(7) {
+        animation-delay: 0.4s;
+    }
+
+@keyframes formGroupAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Labels */
+.form-label {
+    font-weight: 600;
+    color: var(--rdv-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+    .form-label::before {
+        content: '▸';
+        color: var(--rdv-primary);
+        margin-right: 0.5rem;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+.mb-3:focus-within .form-label::before {
+    transform: translateX(3px);
+    color: var(--rdv-accent);
+}
+
+/* Champs de saisie */
+.form-control,
+.form-select {
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: var(--input-bg);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--rdv-primary);
+        box-shadow: 0 0 0 0.25rem rgba(0, 131, 143, 0.15);
+        background-color: #ffffff;
+        outline: none;
+        transform: translateY(-1px) scale(1.01);
+    }
+
+    .form-control::placeholder {
+        color: #adb5bd;
+        font-style: italic;
+    }
+
+/* Textarea spécial */
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+    textarea.form-control:focus {
+        min-height: 120px;
+        transition: min-height 0.3s ease;
+    }
+
+/* Select personnalisé avec icône calendrier */
+select.form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2300838f' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 12px;
+    padding-right: 3rem;
+}
+
+/* Input datetime avec style spécial */
+input[type="datetime-local"] {
+    position: relative;
+}
+
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        filter: brightness(0.5);
+        transition: all 0.3s ease;
+    }
+
+    input[type="datetime-local"]:hover::-webkit-calendar-picker-indicator {
+        filter: brightness(0.3);
+        transform: scale(1.2);
+    }
+
+/* Input number avec style */
+input[type="number"] {
+    appearance: textfield;
+}
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        opacity: 1;
+        height: 40px;
+    }
+
+/* Validation visuelle */
+.form-control:valid,
+.form-select:valid {
+    border-color: var(--rdv-success);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2300a86b' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.2rem;
+    padding-right: 3rem;
+}
+
+/* Messages de validation */
+.text-danger {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+    color: var(--rdv-danger);
+    font-weight: 500;
+    animation: shake 0.3s ease;
+}
+
+.validation-summary-errors {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+    border-left: 4px solid var(--rdv-danger);
+    padding: 1.25rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Boutons */
+.btn {
+    border-radius: 10px;
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+    .btn i {
+        margin-right: 0.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .btn:hover i {
+        transform: translateX(3px);
+    }
+
+/* Bouton Success */
+.btn-success {
+    background: linear-gradient(135deg, var(--rdv-success) 0%, #00c97d 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-success::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-success:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 168, 107, 0.4);
+        color: white;
+    }
+
+/* Bouton Danger */
+.btn-danger {
+    background: linear-gradient(135deg, var(--rdv-danger) 0%, #e57373 100%);
+    color: white;
+}
+
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        animation: shake 0.3s ease;
+        color: white;
+    }
+
+/* Bouton Secondary */
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #868e96 100%);
+    color: white;
+}
+
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        color: white;
+    }
+
+/* Groupe de boutons */
+.mt-4 {
+    margin-top: 2rem !important;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border-color);
+    display: flex;
+    gap: 1rem;
+    animation: fadeIn 0.5s ease-out 0.5s backwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Alerte d'avertissement */
+.alert-warning {
+    background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+    border: 2px solid var(--rdv-warning);
+    border-left: 5px solid var(--rdv-warning);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    color: #856404;
+    animation: pulseAlert 2s infinite;
+}
+
+@keyframes pulseAlert {
+    0%, 100% {
+        box-shadow: 0 5px 20px rgba(255, 152, 0, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 8px 30px rgba(255, 152, 0, 0.4);
+    }
+}
+
+.alert-warning i {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    animation: bounce 1s infinite;
+}
+
+/* Card pour suppression */
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    animation: cardAppear 0.5s ease-out;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--rdv-danger) 0%, #e57373 100%);
+    border: none;
+    padding: 1.25rem 1.5rem;
+}
+
+    .card-header h5 {
+        margin: 0;
+        font-weight: 600;
+    }
+
+.card-body {
+    padding: 1.5rem;
+}
+
+    .card-body dl.row {
+        margin-bottom: 0;
+    }
+
+    .card-body dt {
+        font-weight: 600;
+        color: var(--rdv-primary);
+        padding: 0.5rem 0;
+    }
+
+    .card-body dd {
+        color: var(--rdv-dark);
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+/* Effet de focus */
+.mb-3:focus-within {
+    background: linear-gradient(to right, rgba(0, 131, 143, 0.02), transparent);
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .row > div[class*="col-"] {
+        padding: 1.5rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .mt-4 {
+        flex-direction: column;
+    }
+}

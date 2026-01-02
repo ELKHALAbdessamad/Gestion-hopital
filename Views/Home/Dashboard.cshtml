@@ -1,0 +1,304 @@
+@model HospitalManagement.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+}
+
+<div class="container-fluid">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <h1><i class="fas fa-hospital"></i> Tableau de Bord</h1>
+        <p>Bienvenue dans votre système de gestion hospitalière</p>
+        <div class="date-time">
+            <span><i class="fas fa-calendar"></i> <span id="currentDate"></span></span>
+            <span><i class="fas fa-clock"></i> <span id="currentTime"></span></span>
+        </div>
+    </div>
+
+    <!-- Stats Grid - Adapté selon le rôle -->
+    <div class="stats-grid">
+        <!-- Admin - Tous les stats -->
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="stat-card patients stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +12%</span>
+                <div class="icon"><i class="fas fa-user-injured"></i></div>
+                <h3 data-target="@(Model?.TotalPatients ?? 0)">0</h3>
+                <p>Patients Enregistrés</p>
+            </div>
+
+            <div class="stat-card medecins stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +8%</span>
+                <div class="icon"><i class="fas fa-user-md"></i></div>
+                <h3 data-target="@(Model?.TotalMedecins ?? 0)">0</h3>
+                <p>Médecins Actifs</p>
+            </div>
+
+            <div class="stat-card rdv stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +25%</span>
+                <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                <h3 data-target="@(Model?.RendezvousAujourdhui ?? 0)">0</h3>
+                <p>Rendez-vous Aujourd'hui</p>
+            </div>
+
+            <div class="stat-card services stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +5%</span>
+                <div class="icon"><i class="fas fa-hospital"></i></div>
+                <h3 data-target="@(Model?.TotalServices ?? 0)">0</h3>
+                <p>Services Médicaux</p>
+            </div>
+        }
+        else if (User.IsInRole("Receptionniste"))
+        {
+            <div class="stat-card patients stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +12%</span>
+                <div class="icon"><i class="fas fa-user-injured"></i></div>
+                <h3 data-target="@(Model?.TotalPatients ?? 0)">0</h3>
+                <p>Patients Enregistrés</p>
+            </div>
+
+            <div class="stat-card rdv stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +25%</span>
+                <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                <h3 data-target="@(Model?.RendezvousAujourdhui ?? 0)">0</h3>
+                <p>Rendez-vous Aujourd'hui</p>
+            </div>
+
+            <div class="stat-card services stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +5%</span>
+                <div class="icon"><i class="fas fa-hospital"></i></div>
+                <h3 data-target="@(Model?.TotalServices ?? 0)">0</h3>
+                <p>Services Médicaux</p>
+            </div>
+        }
+        else if (User.IsInRole("Medecin"))
+        {
+            <div class="stat-card rdv stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +25%</span>
+                <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                <h3 data-target="@(Model?.RendezvousAujourdhui ?? 0)">0</h3>
+                <p>Rendez-vous Aujourd'hui</p>
+            </div>
+
+            <div class="stat-card patients stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +12%</span>
+                <div class="icon"><i class="fas fa-user-injured"></i></div>
+                <h3 data-target="@(Model?.TotalPatients ?? 0)">0</h3>
+                <p>Patients</p>
+            </div>
+
+            <div class="stat-card services stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +5%</span>
+                <div class="icon"><i class="fas fa-hospital"></i></div>
+                <h3 data-target="@(Model?.TotalServices ?? 0)">0</h3>
+                <p>Services Médicaux</p>
+            </div>
+        }
+        else
+        {
+            <!-- Utilisateur sans rôle spécifique - Afficher les stats générales -->
+            <div class="stat-card patients stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +12%</span>
+                <div class="icon"><i class="fas fa-user-injured"></i></div>
+                <h3 data-target="@(Model?.TotalPatients ?? 0)">0</h3>
+                <p>Patients Enregistrés</p>
+            </div>
+
+            <div class="stat-card rdv stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +25%</span>
+                <div class="icon"><i class="fas fa-calendar-check"></i></div>
+                <h3 data-target="@(Model?.RendezvousAujourdhui ?? 0)">0</h3>
+                <p>Rendez-vous Aujourd'hui</p>
+            </div>
+
+            <div class="stat-card services stagger-item">
+                <span class="trend"><i class="fas fa-arrow-up"></i> +5%</span>
+                <div class="icon"><i class="fas fa-hospital"></i></div>
+                <h3 data-target="@(Model?.TotalServices ?? 0)">0</h3>
+                <p>Services Médicaux</p>
+            </div>
+        }
+    </div>
+
+    <!-- Charts Section - Adapté selon le rôle -->
+    <div class="charts-section">
+        <!-- Admin et Receptionniste - Tous les graphiques -->
+        @if (User.IsInRole("Admin") || User.IsInRole("Receptionniste") || !User.IsInRole("Medecin"))
+        {
+            <div class="chart-card">
+                <h4><i class="fas fa-chart-line"></i> Rendez-vous par Semaine</h4>
+                <div class="chart-placeholder">
+                    <canvas id="rdvChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h4><i class="fas fa-chart-pie"></i> Répartition par Service</h4>
+                <div class="chart-placeholder">
+                    <canvas id="servicesChart"></canvas>
+                </div>
+            </div>
+        }
+        else if (User.IsInRole("Medecin"))
+        {
+            <div class="chart-card">
+                <h4><i class="fas fa-chart-line"></i> Rendez-vous par Semaine</h4>
+                <div class="chart-placeholder">
+                    <canvas id="rdvChart"></canvas>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Activity Feed - Adapté selon le rôle -->
+    @if (User.IsInRole("Admin") || User.IsInRole("Receptionniste"))
+    {
+        <div class="activity-feed">
+            <h4><i class="fas fa-bell"></i> Activités Récentes</h4>
+
+            @if (Model?.RecentActivities != null && Model.RecentActivities.Any())
+            {
+                @foreach (var activity in Model.RecentActivities)
+                {
+                    <div class="activity-item @activity.Type">
+                        <div class="activity-icon"><i class="@activity.Icon"></i></div>
+                        <div class="activity-content">
+                            <h5>@activity.Title</h5>
+                            <p>@activity.Description</p>
+                        </div>
+                        <span class="activity-time">@activity.TimeAgo</span>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="activity-item new">
+                    <div class="activity-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="activity-content">
+                        <h5>Système Actif</h5>
+                        <p>Le système de gestion hospitalière est opérationnel</p>
+                    </div>
+                    <span class="activity-time">Maintenant</span>
+                </div>
+            }
+        </div>
+    }
+
+    <!-- Quick Actions Section - Afficher tous les boutons pour tous les utilisateurs -->
+    <div style="margin-bottom: 2rem;">
+        <h2 style="font-size: 1.8rem; color: #2c3e50; margin-bottom: 1.5rem; font-weight: 700;">
+            <i class="fas fa-plus-circle"></i> Actions Rapides
+        </h2>
+    </div>
+    <div class="quick-actions">
+        <!-- Ajouter Patient -->
+        <a asp-controller="Patients" asp-action="Create" class="action-btn patients">
+            <i class="fas fa-user-plus"></i>
+            <span>Ajouter Patient</span>
+        </a>
+
+        <!-- Ajouter Médecin -->
+        <a href="/Medecins/Create" class="action-btn medecins">
+            <i class="fas fa-user-md"></i>
+            <span>Ajouter Médecin</span>
+        </a>
+
+        <!-- Ajouter Rendez-vous -->
+        <a asp-controller="RendezVous" asp-action="Create" class="action-btn rdv">
+            <i class="fas fa-calendar-plus"></i>
+            <span>Ajouter Rendez-vous</span>
+        </a>
+
+        <!-- Ajouter Service -->
+        <a asp-controller="Services" asp-action="Create" class="action-btn services">
+            <i class="fas fa-hospital"></i>
+            <span>Ajouter Service</span>
+        </a>
+
+        <!-- Ajouter Dossier Médical -->
+        <a asp-controller="DossiersMedicaux" asp-action="Create" class="action-btn dossiers">
+            <i class="fas fa-file-medical"></i>
+            <span>Ajouter Dossier</span>
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Date and Time
+        function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('fr-FR', dateOptions);
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString('fr-FR');
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Rendez-vous Chart
+        const rdvCtx = document.getElementById('rdvChart').getContext('2d');
+        new Chart(rdvCtx, {
+            type: 'line',
+            data: {
+                labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+                datasets: [{
+                    label: 'Rendez-vous',
+                    data: @Html.Raw(Json.Serialize(Model?.RendezvousParJour ?? new int[] { 0, 0, 0, 0, 0, 0, 0 })),
+                    borderColor: 'rgb(0, 102, 204)',
+                    backgroundColor: 'rgba(0, 102, 204, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgb(0, 102, 204)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Services Chart
+        const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+        new Chart(servicesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model?.ServicesLabels ?? new string[] { "Cardiologie", "Pédiatrie", "Urgences" })),
+                datasets: [{
+                    data: @Html.Raw(Json.Serialize(Model?.ServicesData ?? new int[] { 25, 20, 30 })),
+                    backgroundColor: [
+                        'rgb(0, 102, 204)',
+                        'rgb(0, 163, 224)',
+                        'rgb(67, 233, 123)',
+                        'rgb(240, 147, 251)',
+                        'rgb(255, 152, 0)'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+}

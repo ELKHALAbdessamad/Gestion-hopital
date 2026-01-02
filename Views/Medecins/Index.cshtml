@@ -1,0 +1,62 @@
+﻿@model IEnumerable<HospitalManagement.Models.Medecin>
+
+@{
+    ViewData["Title"] = "Liste des Médecins";
+}
+
+<h2>@ViewData["Title"]</h2>
+<link rel="stylesheet" href="~/css/medecin-list-style.css" />
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Ajouter un Médecin</a>
+    </p>
+}
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Spécialité</th>
+            <th>Email</th>
+            <th>Numéro Licence</th>
+            <th>Service</th>
+            <th>Date Embauche</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var medecin in Model)
+            {
+                <tr>
+                    <td>@medecin.Nom</td>
+                    <td>@medecin.Prenom</td>
+                    <td>@medecin.Specialite</td>
+                    <td>@medecin.Email</td>
+                    <td>@medecin.NumeroLicence</td>
+                    <td>@medecin.Service?.Nom</td>
+                    <td>@medecin.DateEmbauche.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@medecin.Id" class="btn btn-warning btn-sm">Modifier</a>
+                        <a asp-action="Delete" asp-route-id="@medecin.Id" class="btn btn-danger btn-sm">Supprimer</a>
+                        <a asp-action="Details" asp-route-id="@medecin.Id" class="btn btn-info btn-sm">Détails</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8" class="text-center">Aucun médecin trouvé.</td>
+            </tr>
+        }
+    </tbody>
+</table>

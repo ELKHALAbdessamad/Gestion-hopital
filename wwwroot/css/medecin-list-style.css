@@ -1,0 +1,403 @@
+﻿/* Style professionnel médical pour la liste des médecins */
+
+/* Couleurs pour les médecins - Thème bleu professionnel */
+:root {
+    --medecin-primary: #1e88e5;
+    --medecin-secondary: #42a5f5;
+    --medecin-accent: #0d47a1;
+    --medecin-success: #00a86b;
+    --medecin-warning: #ff9800;
+    --medecin-danger: #e74c3c;
+    --medecin-info: #00bcd4;
+    --medecin-dark: #263238;
+    --bg-light: #f5f7fa;
+    --border-color: #e1e8ed;
+    --shadow-color: rgba(30, 136, 229, 0.15);
+}
+
+/* Arrière-plan de la page */
+body {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f1f8ff 100%);
+    min-height: 100vh;
+}
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: repeating-linear-gradient(90deg, rgba(30, 136, 229, 0.03) 0px, transparent 1px, transparent 50px, rgba(30, 136, 229, 0.03) 51px), repeating-linear-gradient(0deg, rgba(30, 136, 229, 0.03) 0px, transparent 1px, transparent 50px, rgba(30, 136, 229, 0.03) 51px);
+        z-index: -1;
+    }
+
+/* En-tête de la page */
+h2 {
+    color: var(--medecin-dark);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--medecin-primary);
+    position: relative;
+    display: inline-block;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+    h2::after {
+        content: '🩺';
+        position: absolute;
+        right: -3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        opacity: 0.4;
+    }
+
+    h2::before {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--medecin-info);
+    }
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Alertes personnalisées */
+.alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.4s ease-out;
+    border-left: 4px solid;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border-left-color: var(--medecin-success);
+}
+
+    .alert-success::before {
+        content: '✓';
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background: var(--medecin-success);
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 24px;
+        margin-right: 0.75rem;
+        font-weight: bold;
+    }
+
+/* Bouton d'ajout principal */
+p > .btn-primary {
+    background: linear-gradient(135deg, var(--medecin-primary) 0%, var(--medecin-secondary) 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+    p > .btn-primary::before {
+        content: '🩺';
+        position: absolute;
+        right: -30px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        opacity: 0.2;
+        transition: right 0.3s ease;
+    }
+
+    p > .btn-primary:hover::before {
+        right: 10px;
+    }
+
+    p > .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(30, 136, 229, 0.4);
+    }
+
+/* Table conteneur */
+.table {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px var(--shadow-color);
+    margin-bottom: 2rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    /* En-tête de table */
+    .table thead {
+        background: linear-gradient(135deg, var(--medecin-dark) 0%, #37474f 100%);
+        color: white;
+    }
+
+        .table thead th {
+            border: none;
+            padding: 1.25rem 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+            position: relative;
+        }
+
+            .table thead th::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, var(--medecin-primary), var(--medecin-info));
+            }
+
+    /* Corps de table */
+    .table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+        .table tbody tr:hover {
+            background: linear-gradient(90deg, #f8f9fa 0%, #e3f2fd 100%);
+            transform: scale(1.01);
+            box-shadow: 0 3px 15px rgba(30, 136, 229, 0.15);
+        }
+
+    .table tbody td {
+        padding: 1rem;
+        vertical-align: middle;
+        color: var(--medecin-dark);
+        font-size: 0.95rem;
+    }
+
+    .table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    /* Animation d'apparition des lignes */
+    .table tbody tr {
+        animation: fadeInRow 0.5s ease-out backwards;
+    }
+
+        .table tbody tr:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .table tbody tr:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .table tbody tr:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .table tbody tr:nth-child(4) {
+            animation-delay: 0.25s;
+        }
+
+        .table tbody tr:nth-child(5) {
+            animation-delay: 0.3s;
+        }
+
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Colonnes importantes stylisées */
+.table tbody td:first-child,
+.table tbody td:nth-child(2) {
+    font-weight: 600;
+    color: var(--medecin-primary);
+}
+
+.table tbody td:nth-child(3) {
+    font-weight: 600;
+    color: var(--medecin-info);
+    font-style: italic;
+}
+
+    /* Badge pour la spécialité */
+    .table tbody td:nth-child(3)::before {
+        content: '🎓';
+        margin-right: 0.5rem;
+    }
+
+/* Badge pour le service */
+.table tbody td:nth-child(6)::before {
+    content: '🏥';
+    margin-right: 0.5rem;
+}
+
+/* Boutons d'action */
+.btn-sm {
+    border-radius: 8px;
+    padding: 0.5rem 0.875rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 0 0.15rem;
+}
+
+/* Bouton Warning (Modifier) */
+.btn-warning {
+    background: linear-gradient(135deg, var(--medecin-warning) 0%, #ffa726 100%);
+    color: white;
+}
+
+    .btn-warning:hover {
+        background: linear-gradient(135deg, #e68900 0%, var(--medecin-warning) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+        color: white;
+    }
+
+/* Bouton Danger (Supprimer) */
+.btn-danger {
+    background: linear-gradient(135deg, var(--medecin-danger) 0%, #e57373 100%);
+    color: white;
+}
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #c0392b 0%, var(--medecin-danger) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+        color: white;
+    }
+
+/* Bouton Info (Détails) */
+.btn-info {
+    background: linear-gradient(135deg, var(--medecin-info) 0%, #26c6da 100%);
+    color: white;
+}
+
+    .btn-info:hover {
+        background: linear-gradient(135deg, #00acc1 0%, var(--medecin-info) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 188, 212, 0.4);
+        color: white;
+    }
+
+/* Message "Aucun médecin" */
+.table tbody td[colspan] {
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+    .table tbody td[colspan]::before {
+        content: '🩺';
+        display: block;
+        font-size: 3rem;
+        opacity: 0.3;
+        margin-bottom: 1rem;
+    }
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .table {
+        font-size: 0.9rem;
+    }
+
+        .table thead th,
+        .table tbody td {
+            padding: 0.75rem;
+        }
+}
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .table {
+        font-size: 0.85rem;
+    }
+
+        .table thead th,
+        .table tbody td {
+            padding: 0.5rem;
+        }
+
+    .btn-sm {
+        display: block;
+        width: 100%;
+        margin: 0.25rem 0;
+    }
+}
+
+/* Effet de pulse sur le bouton d'ajout */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 4px 25px rgba(30, 136, 229, 0.5);
+    }
+}
+
+p > .btn-primary {
+    animation: pulse 2s infinite;
+}
+
+/* Amélioration de l'accessibilité */
+.table tbody tr:focus-within {
+    outline: 2px solid var(--medecin-primary);
+    outline-offset: -2px;
+}
+
+/* Séparateur entre sections */
+p {
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}

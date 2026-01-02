@@ -1,0 +1,63 @@
+﻿@model HospitalManagement.Models.RendezVous
+@{
+    ViewData["Title"] = "Supprimer le Rendez-Vous";
+}
+
+<h2 class="text-danger">@ViewData["Title"]</h2>
+<link rel="stylesheet" href="~/css/rdv-forms-style.css" />
+<div class="alert alert-warning" role="alert">
+    <i class="fas fa-exclamation-triangle"></i>
+    <strong>Attention !</strong> Cette action est irréversible.
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">Informations du rendez-vous à supprimer</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Patient</dt>
+                    <dd class="col-sm-8">@(Model.Patient?.Nom ?? "N/A") @(Model.Patient?.Prenom ?? "")</dd>
+
+                    <dt class="col-sm-4">Médecin</dt>
+                    <dd class="col-sm-8">Dr. @(Model.Medecin?.Nom ?? "N/A") @(Model.Medecin?.Prenom ?? "")</dd>
+
+                    <dt class="col-sm-4">Date et Heure</dt>
+                    <dd class="col-sm-8">@Model.DateHeure.ToString("dd/MM/yyyy à HH:mm")</dd>
+
+                    <dt class="col-sm-4">Statut</dt>
+                    <dd class="col-sm-8"><span class="badge bg-info">@Model.Statut</span></dd>
+
+                    <dt class="col-sm-4">Durée</dt>
+                    <dd class="col-sm-8">@Model.Duree minutes</dd>
+
+                    @if (!string.IsNullOrEmpty(Model.Motif))
+                    {
+                        <dt class="col-sm-4">Motif</dt>
+                        <dd class="col-sm-8">@Model.Motif</dd>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.Notes))
+                    {
+                        <dt class="col-sm-4">Notes</dt>
+                        <dd class="col-sm-8">@Model.Notes</dd>
+                    }
+                </dl>
+            </div>
+        </div>
+
+        <form asp-action="Delete" method="post" class="mt-3">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous absolument sûr de vouloir supprimer ce rendez-vous ?');">
+                <i class="fas fa-trash"></i> Confirmer la suppression
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Annuler
+            </a>
+        </form>
+    </div>
+</div>

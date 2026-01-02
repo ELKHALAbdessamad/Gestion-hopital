@@ -1,0 +1,256 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HospitalManagement</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/layout-style.css" />
+    <link rel="stylesheet" href="~/css/typography-animations.css" />
+    <link rel="stylesheet" href="~/css/hospital-style.css" />
+    <link rel="stylesheet" href="~/css/page-backgrounds.css" />
+    <link rel="stylesheet" href="~/css/Services.css" />
+    <link rel="stylesheet" href="~/css/footer-fix.css" />
+    <link rel="stylesheet" href="~/css/animations.css" />
+    <link rel="stylesheet" href="~/css/contact-section.css" />
+    <link rel="stylesheet" href="~/css/navbar-buttons.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/HospitalManagement.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            flex-shrink: 0;
+        }
+        .container {
+            flex: 1;
+        }
+        main {
+            flex: 1;
+        }
+        .contact-section {
+            flex-shrink: 0;
+        }
+        footer {
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-heart-pulse"></i> Hôpital Cœur & Santé
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Accueil -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                <i class="bi bi-house-door"></i> Accueil
+                            </a>
+                        </li>
+
+                        <!-- Spécialités -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Specialties">
+                                <i class="bi bi-hospital"></i> Spécialités
+                            </a>
+                        </li>
+
+                        <!-- Patients -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Patients" asp-action="Index">
+                                <i class="bi bi-people"></i> Patients
+                            </a>
+                        </li>
+
+                        <!-- Médecins -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Medecins" asp-action="Index">
+                                <i class="bi bi-person-badge"></i> Médecins
+                            </a>
+                        </li>
+
+                        <!-- Services -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Services" asp-action="Index">
+                                <i class="bi bi-building"></i> Services
+                            </a>
+                        </li>
+
+                        <!-- Rendez-vous -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="RendezVous" asp-action="Index">
+                                <i class="bi bi-calendar-check"></i> Rendez-vous
+                            </a>
+                        </li>
+
+                        <!-- Dossiers Médicaux -->
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="DossiersMedicaux" asp-action="Index">
+                                <i class="bi bi-file-medical"></i> Dossiers
+                            </a>
+                        </li>
+
+                        <!-- Profil et Déconnexion -->
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                                    <i class="bi bi-person-circle"></i> @User.Identity.Name
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Account" asp-action="Profile">
+                                            <i class="bi bi-person"></i> Profil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <form method="post" asp-controller="Account" asp-action="Logout" class="d-inline">
+                                            <button type="submit" class="dropdown-item">
+                                                <i class="bi bi-box-arrow-right"></i> Déconnexion
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Login">
+                                    <i class="bi bi-box-arrow-in-right"></i> Connexion
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-container">
+            <div class="contact-header">
+                <h2><i class="bi bi-telephone"></i> Nous Contacter</h2>
+                <p>Besoin d'aide ? Contactez-nous directement</p>
+            </div>
+
+            <div class="contact-grid">
+                <!-- Téléphone -->
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="bi bi-telephone"></i>
+                    </div>
+                    <h3>Téléphone</h3>
+                    <p>Appelez-nous pour une assistance immédiate</p>
+                    <a href="tel:+212612345678">+212 6 12 34 56 78</a>
+                </div>
+
+                <!-- Email -->
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="bi bi-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>Envoyez-nous un message</p>
+                    <a href="mailto:support@hopital-coeur-sante.com">support@hopital.com</a>
+                </div>
+
+                <!-- Adresse -->
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="bi bi-geo-alt"></i>
+                    </div>
+                    <h3>Adresse</h3>
+                    <p>Visitez notre établissement</p>
+                    <a href="#">123 Rue de la Santé, Casablanca</a>
+                </div>
+
+                <!-- Urgences -->
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+                    <h3>Urgences</h3>
+                    <p>Service disponible 24h/24</p>
+                    <a href="tel:+212612345679">+212 6 12 34 56 79</a>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form-section">
+                <h3><i class="bi bi-chat-dots"></i> Formulaire de Contact</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Nom Complet</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Téléphone</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Sujet</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="bi bi-send"></i> Envoyer le Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/animations.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

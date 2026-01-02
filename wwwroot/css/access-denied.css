@@ -1,0 +1,105 @@
+.access-denied-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e6f2ff 100%);
+    padding: 2rem;
+}
+
+.access-denied-content {
+    text-align: center;
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 500px;
+    animation: slideInUp 0.6s ease-out;
+}
+
+.access-denied-icon {
+    font-size: 4rem;
+    color: #dc3545;
+    margin-bottom: 1.5rem;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.access-denied-content h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 800;
+}
+
+.access-denied-content p {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.access-denied-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-home {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: #0066cc;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-home:hover {
+    background: #004a99;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 102, 204, 0.3);
+}
+
+.btn-login {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: white;
+    color: #0066cc;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid #0066cc;
+    cursor: pointer;
+}
+
+.btn-login:hover {
+    background: #e6f2ff;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .access-denied-container {
+        min-height: 50vh;
+    }
+
+    .access-denied-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .access-denied-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .access-denied-buttons {
+        flex-direction: column;
+    }
+
+    .btn-home, .btn-login {
+        width: 100%;
+    }
+}

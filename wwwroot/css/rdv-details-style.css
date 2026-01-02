@@ -1,0 +1,457 @@
+﻿/* Style professionnel médical pour la page Détails Rendez-vous */
+
+/* Couleurs */
+:root {
+    --rdv-primary: #00838f;
+    --rdv-secondary: #00acc1;
+    --rdv-accent: #00bcd4;
+    --rdv-success: #00a86b;
+    --rdv-warning: #ff9800;
+    --rdv-danger: #e74c3c;
+    --rdv-info: #26c6da;
+    --rdv-dark: #263238;
+}
+
+/* Arrière-plan */
+body {
+    background: linear-gradient(135deg, #e0f7fa 0%, #f1f8ff 100%);
+    min-height: 100vh;
+}
+
+/* En-tête */
+h2 {
+    color: var(--rdv-dark);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--rdv-primary);
+    position: relative;
+    display: inline-block;
+}
+
+    h2::after {
+        content: '📅';
+        position: absolute;
+        right: -2.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        opacity: 0.3;
+        animation: rotate 10s linear infinite;
+    }
+
+@keyframes rotate {
+    from {
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+h2::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--rdv-accent);
+}
+
+/* Card principale */
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 131, 143, 0.15);
+    background: white;
+    position: relative;
+    animation: cardSlideIn 0.5s ease-out;
+    margin-bottom: 1.5rem;
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rdv-primary), var(--rdv-accent), var(--rdv-secondary));
+    animation: gradientShift 3s infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Card header */
+.card-header {
+    background: linear-gradient(135deg, var(--rdv-primary) 0%, var(--rdv-secondary) 100%);
+    border: none;
+    padding: 1.5rem;
+}
+
+    .card-header h5 {
+        margin: 0;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+    }
+
+    .card-header i {
+        margin-right: 0.75rem;
+        font-size: 1.3rem;
+        animation: pulse 2s infinite;
+    }
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.card-header.bg-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #868e96 100%);
+}
+
+/* Card body */
+.card-body {
+    padding: 2rem;
+}
+
+/* Listes de définition */
+dl.row {
+    margin-bottom: 1.5rem;
+}
+
+    dl.row dt {
+        font-weight: 600;
+        color: var(--rdv-primary);
+        padding: 0.75rem 0;
+        display: flex;
+        align-items: center;
+    }
+
+        dl.row dt i {
+            margin-right: 0.5rem;
+            color: var(--rdv-accent);
+        }
+
+    dl.row dd {
+        color: var(--rdv-dark);
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e1e8ed;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+dl.row dd:last-child {
+    border-bottom: none;
+}
+
+/* Badges animés */
+.badge {
+    font-size: 0.9em;
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    animation: badgeBounce 0.5s ease-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes badgeBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.bg-secondary {
+    background: linear-gradient(135deg, #6c757d, #868e96) !important;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, var(--rdv-primary), var(--rdv-secondary)) !important;
+}
+
+.bg-warning {
+    background: linear-gradient(135deg, #ff9800, #ffa726) !important;
+}
+
+.bg-success {
+    background: linear-gradient(135deg, #00a86b, #00c97d) !important;
+}
+
+.bg-danger {
+    background: linear-gradient(135deg, #e74c3c, #e57373) !important;
+}
+
+.bg-info {
+    background: linear-gradient(135deg, var(--rdv-info), var(--rdv-accent)) !important;
+}
+
+/* Liens */
+a[href^="tel:"],
+a[href^="mailto:"] {
+    color: var(--rdv-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+    a[href^="tel:"]::before {
+        content: '📞';
+        margin-right: 0.5rem;
+    }
+
+    a[href^="mailto:"]::before {
+        content: '✉️';
+        margin-right: 0.5rem;
+    }
+
+    a[href^="tel:"]:hover,
+    a[href^="mailto:"]:hover {
+        color: var(--rdv-secondary);
+        transform: translateX(5px);
+        text-decoration: underline;
+    }
+
+/* Séparateurs HR */
+hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--rdv-accent), transparent);
+    margin: 1.5rem 0;
+    animation: hrGlow 2s infinite;
+}
+
+@keyframes hrGlow {
+    0%, 100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Titres de section */
+h6 {
+    color: var(--rdv-dark);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+    h6 i {
+        margin-right: 0.75rem;
+        color: var(--rdv-primary);
+        font-size: 1.2rem;
+    }
+
+/* Paragraphes de notes */
+p.ms-3 {
+    background: linear-gradient(to right, #f8f9fa, transparent);
+    padding: 1rem;
+    border-left: 3px solid var(--rdv-accent);
+    border-radius: 6px;
+    margin-left: 0 !important;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Boutons d'action */
+.mt-3 .btn {
+    border-radius: 10px;
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-right: 0.75rem;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--rdv-warning) 0%, #ffa726 100%);
+    color: white;
+}
+
+    .btn-warning:hover {
+        transform: translateY(-2px) rotate(2deg);
+        box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        color: white;
+    }
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--rdv-danger) 0%, #e57373 100%);
+    color: white;
+}
+
+    .btn-danger:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        animation: shake 0.3s ease;
+        color: white;
+    }
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateY(-2px) scale(1.05) translateX(0);
+    }
+
+    25% {
+        transform: translateY(-2px) scale(1.05) translateX(-3px);
+    }
+
+    75% {
+        transform: translateY(-2px) scale(1.05) translateX(3px);
+    }
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #868e96 100%);
+    color: white;
+}
+
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        color: white;
+    }
+
+/* Boutons dans liens rapides */
+.btn-outline-primary,
+.btn-outline-info,
+.btn-outline-secondary {
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 0.625rem 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.btn-outline-primary {
+    border-color: var(--rdv-primary);
+    color: var(--rdv-primary);
+}
+
+    .btn-outline-primary:hover {
+        background: linear-gradient(135deg, var(--rdv-primary), var(--rdv-secondary));
+        border-color: var(--rdv-primary);
+        color: white;
+        transform: translateX(5px);
+    }
+
+.btn-outline-info {
+    border-color: var(--rdv-info);
+    color: var(--rdv-info);
+}
+
+    .btn-outline-info:hover {
+        background: linear-gradient(135deg, var(--rdv-info), var(--rdv-accent));
+        border-color: var(--rdv-info);
+        color: white;
+        transform: translateX(5px);
+    }
+
+.btn-outline-secondary {
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+    .btn-outline-secondary:hover {
+        background: linear-gradient(135deg, #6c757d, #868e96);
+        border-color: #6c757d;
+        color: white;
+        transform: translateX(5px);
+    }
+
+/* Grid de boutons */
+.d-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+    .d-grid .btn i {
+        margin-right: 0.5rem;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .mt-3 .btn {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 0.75rem;
+    }
+
+    dl.row dt,
+    dl.row dd {
+        padding: 0.5rem 0;
+    }
+}

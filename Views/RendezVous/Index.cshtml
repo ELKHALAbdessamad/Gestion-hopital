@@ -1,0 +1,223 @@
+﻿@model IEnumerable<HospitalManagement.Models.RendezVous>
+@{
+    ViewData["Title"] = "Liste des Rendez-Vous";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@* Messages de notification *@
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-circle"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Info"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fas fa-info-circle"></i> @TempData["Info"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@* Boutons d'action *@
+<div class="mb-3">
+    @if (User.IsInRole("Admin") || User.IsInRole("Receptionniste"))
+    {
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Ajouter un Rendez-Vous
+        </a>
+    }
+    <a asp-action="Today" class="btn btn-info">
+        <i class="fas fa-calendar-day"></i> Rendez-vous du jour
+    </a>
+</div>
+
+@* Tableau des rendez-vous *@
+<div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Date & Heure</th>
+                <th>Patient</th>
+                <th>Médecin</th>
+                <th>Spécialité</th>
+                <th>Statut</th>
+                <th>Durée</th>
+                <th>Motif</th>
+                <th style="width: 200px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var rv in Model)
+                {
+                    var statutClass = rv.Statut switch
+                    {
+                        "Planifié" => "bg-secondary",
+                        "Confirmé" => "bg-primary",
+                        "En cours" => "bg-warning text-dark",
+                        "Terminé" => "bg-success",
+                        "Annulé" => "bg-danger",
+                        _ => "bg-secondary"
+                    };
+
+                    var isPassedAppointment = rv.DateHeure < DateTime.Now && rv.Statut != "Terminé" && rv.Statut != "Annulé";
+
+                    <tr class="@(isPassedAppointment ? "table-warning" : "")">
+                        <td>
+                            <strong>@rv.DateHeure.ToString("dd/MM/yyyy")</strong><br />
+                            <small class="text-muted">@rv.DateHeure.ToString("HH:mm")</small>
+                        </td>
+                        <td>
+                            <i class="fas fa-user"></i>
+                            @if (rv.Patient != null)
+                            {
+                                @rv.Patient.Nom @rv.Patient.Prenom
+                                if (!string.IsNullOrEmpty(rv.Patient.Telephone))
+                                {
+                                    <br /><small class="text-muted"><i class="fas fa-phone"></i> @rv.Patient.Telephone</small>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-danger">Patient introuvable</span>
+                            }
+                        </td>
+                        <td>
+                            <i class="fas fa-user-md"></i>
+                            @if (rv.Medecin != null)
+                            {
+                                <text>Dr. @rv.Medecin.Nom @rv.Medecin.Prenom</text>
+                            }
+                            else
+                            {
+                                <span class="text-danger">Médecin introuvable</span>
+                            }
+                        </td>
+                        <td>
+                            @if (rv.Medecin != null && !string.IsNullOrEmpty(rv.Medecin.Specialite))
+                            {
+                                <span class="badge bg-info">@rv.Medecin.Specialite</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
+                        </td>
+                        <td>
+                            <span class="badge @statutClass">
+                                @rv.Statut
+                            </span>
+                        </td>
+                        <td>
+                            <i class="fas fa-clock"></i> @rv.Duree min
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(rv.Motif))
+                            {
+                                if (rv.Motif.Length > 30)
+                                {
+                                    <span title="@rv.Motif">@rv.Motif.Substring(0, 30)...</span>
+                                }
+                                else
+                                {
+                                    @rv.Motif
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">-</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a asp-action="Details" asp-route-id="@rv.Id" class="btn btn-info" title="Détails">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@rv.Id" class="btn btn-warning" title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@rv.Id" class="btn btn-danger" title="Supprimer">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8" class="text-center text-muted py-4">
+                        <i class="fas fa-calendar-times fa-3x mb-3"></i>
+                        <p class="mb-0">Aucun rendez-vous trouvé.</p>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Receptionniste"))
+                        {
+                            <a asp-action="Create" class="btn btn-primary mt-3">
+                                <i class="fas fa-plus"></i> Créer le premier rendez-vous
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@* Compteur de rendez-vous *@
+@if (Model != null && Model.Any())
+{
+    <div class="mt-3">
+        <p class="text-muted">
+            <strong>Total :</strong> @Model.Count() rendez-vous
+        </p>
+    </div>
+}
+
+@* CSS inline *@
+<style>
+    .table-warning {
+        background-color: #fff3cd !important;
+    }
+
+    .btn-group-sm > .btn {
+        padding: 0.25rem 0.5rem;
+    }
+
+    .badge {
+        font-size: 0.85em;
+        padding: 0.4em 0.6em;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    .alert {
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @@keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

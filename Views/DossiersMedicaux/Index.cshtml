@@ -1,0 +1,51 @@
+﻿@model IEnumerable<HospitalManagement.Models.DossierMedical>
+
+@{
+    ViewData["Title"] = "Liste des Dossiers Médicaux";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Ajouter un Dossier Médical</a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Patient</th>
+            <th>Médecin</th>
+            <th>Résumé</th>
+            <th>Date de création</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            foreach (var dossier in Model)
+            {
+                <tr>
+                    <td>@dossier.Patient?.Nom @dossier.Patient?.Prenom</td>
+                    <td>@dossier.Medecin?.Nom @dossier.Medecin?.Prenom</td>
+                    <td>@dossier.Resume</td>
+                    <td>@dossier.DateCreation.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@dossier.Id" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">Aucun dossier médical trouvé.</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,21 @@
+﻿@model HospitalManagement.Models.Medecin
+
+@{
+    ViewData["Title"] = "Détails du Médecin";
+}
+
+<h2>@ViewData["Title"]</h2>
+<link rel="stylesheet" href="~/css/medecin-details-style.css" />
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Nom @Model.Prenom</h5>
+        <p class="card-text"><strong>Spécialité:</strong> @Model.Specialite</p>
+        <p class="card-text"><strong>Email:</strong> @Model.Email</p>
+        <p class="card-text"><strong>Numéro Licence:</strong> @Model.NumeroLicence</p>
+        <p class="card-text"><strong>Service:</strong> @Model.Service?.Nom</p>
+        <p class="card-text"><strong>Date Embauche:</strong> @Model.DateEmbauche.ToString("dd/MM/yyyy")</p>
+    </div>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Modifier</a>
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

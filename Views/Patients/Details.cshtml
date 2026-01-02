@@ -1,0 +1,124 @@
+﻿@model HospitalManagement.Models.Patient
+
+@{
+    ViewData["Title"] = "Détails du Patient";
+}
+
+<h2>@ViewData["Title"]</h2>
+<link rel="stylesheet" href="~/css/patient-forms-style.css" />
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+            <i class="fas fa-user"></i> @Model.Nom @Model.Prenom
+        </h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">
+                <i class="fas fa-id-card"></i> ID:
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Id
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-user"></i> Nom:
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Nom
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-user"></i> Prénom:
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Prenom
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-birthday-cake"></i> Date de Naissance:
+            </dt>
+            <dd class="col-sm-9">
+                @Model.DateNaissance.ToString("dd/MM/yyyy")
+                <span class="badge bg-secondary">
+                    @((DateTime.Now.Year - Model.DateNaissance.Year)) ans
+                </span>
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-venus-mars"></i> Sexe:
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Sexe
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-phone"></i> Téléphone:
+            </dt>
+            <dd class="col-sm-9">
+                <a href="tel:@Model.Telephone">@Model.Telephone</a>
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-envelope"></i> Email:
+            </dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrEmpty(Model.Email))
+                {
+                    <a href="mailto:@Model.Email">@Model.Email</a>
+                }
+                else
+                {
+                    <span class="text-muted">Non renseigné</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-map-marker-alt"></i> Adresse:
+            </dt>
+            <dd class="col-sm-9">
+                @Model.Adresse
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-id-badge"></i> N° Sécurité Sociale:
+            </dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrEmpty(Model.NumeroSecuriteSociale))
+                {
+                    @Model.NumeroSecuriteSociale
+                }
+                else
+                {
+                    <span class="text-muted">Non renseigné</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">
+                <i class="fas fa-calendar-plus"></i> Date d'Inscription:
+            </dt>
+            <dd class="col-sm-9">
+                @Model.DateInscription.ToString("dd/MM/yyyy HH:mm")
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+            <i class="fas fa-edit"></i> Modifier
+        </a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+            <i class="fas fa-trash"></i> Supprimer
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>// Auto-dismiss alerts after 5 seconds
+        setTimeout(function () {
+            $('.alert').fadeOut('slow');
+        }, 5000);</script>
+}

@@ -1,0 +1,477 @@
+﻿/* Style professionnel médical pour la liste des Rendez-vous */
+
+/* Couleurs pour les rendez-vous - Thème turquoise médical */
+:root {
+    --rdv-primary: #00838f;
+    --rdv-secondary: #00acc1;
+    --rdv-accent: #00bcd4;
+    --rdv-success: #00a86b;
+    --rdv-warning: #ff9800;
+    --rdv-danger: #e74c3c;
+    --rdv-info: #26c6da;
+    --rdv-dark: #263238;
+    --bg-light: #e0f7fa;
+    --border-color: #b2ebf2;
+    --shadow-color: rgba(0, 131, 143, 0.15);
+}
+
+/* Arrière-plan de la page */
+body {
+    background: linear-gradient(135deg, #e0f7fa 0%, #f1f8ff 100%);
+    min-height: 100vh;
+}
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: repeating-linear-gradient(90deg, rgba(0, 131, 143, 0.03) 0px, transparent 1px, transparent 50px, rgba(0, 131, 143, 0.03) 51px), repeating-linear-gradient(0deg, rgba(0, 131, 143, 0.03) 0px, transparent 1px, transparent 50px, rgba(0, 131, 143, 0.03) 51px);
+        z-index: -1;
+    }
+
+/* En-tête de la page */
+h2 {
+    color: var(--rdv-dark);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--rdv-primary);
+    position: relative;
+    display: inline-block;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+    h2::after {
+        content: '📅';
+        position: absolute;
+        right: -3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        opacity: 0.4;
+        animation: bounce 2s infinite;
+    }
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(-50%);
+    }
+
+    50% {
+        transform: translateY(-60%);
+    }
+}
+
+h2::before {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--rdv-accent);
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Alertes personnalisées */
+.alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: slideDown 0.4s ease-out;
+    border-left: 4px solid;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border-left-color: var(--rdv-success);
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    border-left-color: var(--rdv-danger);
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #0c5460;
+    border-left-color: var(--rdv-info);
+}
+
+.alert i {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Boutons d'action principaux */
+.mb-3 > .btn {
+    border-radius: 10px;
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: none;
+    margin-right: 0.75rem;
+}
+
+.mb-3 > .btn-primary {
+    background: linear-gradient(135deg, var(--rdv-primary) 0%, var(--rdv-secondary) 100%);
+    animation: pulse 2s infinite;
+}
+
+    .mb-3 > .btn-primary:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 25px rgba(0, 131, 143, 0.4);
+    }
+
+.mb-3 > .btn-info {
+    background: linear-gradient(135deg, var(--rdv-info) 0%, var(--rdv-accent) 100%);
+}
+
+    .mb-3 > .btn-info:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 25px rgba(38, 198, 218, 0.4);
+    }
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(0, 131, 143, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 4px 25px rgba(0, 131, 143, 0.4);
+    }
+}
+
+/* Container de table */
+.table-responsive {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px var(--shadow-color);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+/* Table principale */
+.table {
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+    .table thead {
+        background: linear-gradient(135deg, var(--rdv-dark) 0%, #37474f 100%);
+        color: white;
+    }
+
+        .table thead th {
+            border: none;
+            padding: 1.25rem 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            vertical-align: middle;
+            position: relative;
+        }
+
+            .table thead th::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, var(--rdv-primary), var(--rdv-accent));
+            }
+
+    /* Corps de table */
+    .table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+        .table tbody tr:hover {
+            background: linear-gradient(90deg, #f8f9fa 0%, #e0f7fa 100%);
+            transform: scale(1.01);
+            box-shadow: 0 3px 15px rgba(0, 131, 143, 0.15);
+        }
+
+    .table tbody td {
+        padding: 1rem;
+        vertical-align: middle;
+        color: var(--rdv-dark);
+        font-size: 0.95rem;
+    }
+
+    /* Animation d'apparition des lignes */
+    .table tbody tr {
+        animation: fadeInRow 0.5s ease-out backwards;
+    }
+
+        .table tbody tr:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .table tbody tr:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .table tbody tr:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .table tbody tr:nth-child(4) {
+            animation-delay: 0.25s;
+        }
+
+        .table tbody tr:nth-child(5) {
+            animation-delay: 0.3s;
+        }
+
+@keyframes fadeInRow {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Ligne d'avertissement pour RDV passés */
+.table-warning {
+    background: linear-gradient(90deg, #fff8e1 0%, #ffecb3 100%) !important;
+    border-left: 4px solid var(--rdv-warning) !important;
+    animation: warningPulse 2s infinite;
+}
+
+@keyframes warningPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.85;
+    }
+}
+
+/* Badges de statut animés */
+.badge {
+    font-size: 0.85em;
+    padding: 0.5em 0.85em;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    animation: badgeFadeIn 0.5s ease-out;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes badgeFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.bg-secondary {
+    background: linear-gradient(135deg, #6c757d, #868e96) !important;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, var(--rdv-primary), var(--rdv-secondary)) !important;
+}
+
+.bg-warning {
+    background: linear-gradient(135deg, #ff9800, #ffa726) !important;
+}
+
+.bg-success {
+    background: linear-gradient(135deg, #00a86b, #00c97d) !important;
+}
+
+.bg-danger {
+    background: linear-gradient(135deg, #e74c3c, #e57373) !important;
+}
+
+.bg-info {
+    background: linear-gradient(135deg, var(--rdv-info), var(--rdv-accent)) !important;
+}
+
+/* Icônes avec animations */
+.fas.fa-user::before,
+.fas.fa-user-md::before {
+    animation: iconRotate 3s infinite;
+}
+
+@keyframes iconRotate {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+.fas.fa-clock::before {
+    animation: tickTock 1s infinite;
+}
+
+@keyframes tickTock {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+/* Boutons d'action */
+.btn-group-sm > .btn {
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    margin: 0 0.15rem;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, var(--rdv-info) 0%, var(--rdv-accent) 100%);
+    color: white;
+}
+
+    .btn-info:hover {
+        transform: translateY(-2px) rotate(2deg);
+        box-shadow: 0 4px 12px rgba(38, 198, 218, 0.4);
+        color: white;
+    }
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--rdv-warning) 0%, #ffa726 100%);
+    color: white;
+}
+
+    .btn-warning:hover {
+        transform: translateY(-2px) rotate(-2deg);
+        box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+        color: white;
+    }
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--rdv-danger) 0%, #e57373 100%);
+    color: white;
+}
+
+    .btn-danger:hover {
+        transform: translateY(-2px) scale(1.1);
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+        color: white;
+    }
+
+/* Message "Aucun rendez-vous" */
+.table tbody td[colspan] {
+    padding: 3rem 1rem;
+}
+
+.fa-calendar-times {
+    opacity: 0.3;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Compteur total */
+.mt-3 p {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--rdv-primary);
+    margin: 0;
+    display: inline-block;
+}
+
+.mt-3 strong {
+    color: var(--rdv-primary);
+    font-size: 1.1rem;
+}
+
+.mt-3 p::before {
+    content: '📊';
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .table-responsive {
+        padding: 1rem;
+    }
+
+    .table {
+        font-size: 0.85rem;
+    }
+
+    .btn-group-sm {
+        flex-direction: column;
+    }
+
+        .btn-group-sm > .btn {
+            width: 100%;
+            margin: 0.25rem 0;
+        }
+}

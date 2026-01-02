@@ -1,0 +1,586 @@
+﻿/* Style professionnel médical pour Create, Edit et Delete Patient */
+
+/* Couleurs médicales pour les formulaires */
+:root {
+    --hospital-primary: #0066cc;
+    --hospital-secondary: #00a8e8;
+    --hospital-success: #00a86b;
+    --hospital-warning: #ff9800;
+    --hospital-danger: #e74c3c;
+    --hospital-dark: #2c3e50;
+    --bg-light: #f8f9fc;
+    --border-color: #e3e6f0;
+    --input-bg: #f8fafb;
+    --shadow-color: rgba(0, 102, 204, 0.1);
+}
+
+/* Arrière-plan de la page */
+body {
+    background: linear-gradient(135deg, #f0f8ff 0%, #e0f2f7 100%);
+    min-height: 100vh;
+    position: relative;
+}
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: repeating-linear-gradient(90deg, rgba(0, 102, 204, 0.02) 0px, transparent 1px, transparent 60px, rgba(0, 102, 204, 0.02) 61px), repeating-linear-gradient(0deg, rgba(0, 102, 204, 0.02) 0px, transparent 1px, transparent 60px, rgba(0, 102, 204, 0.02) 61px);
+        z-index: -1;
+    }
+
+/* Conteneur principal */
+.container,
+.container-fluid {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+/* En-tête de la page */
+h2 {
+    color: var(--hospital-dark);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--hospital-primary);
+    position: relative;
+    display: inline-block;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+    h2::after {
+        content: '⚕';
+        position: absolute;
+        right: -2.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        opacity: 0.3;
+        color: var(--hospital-primary);
+    }
+
+    h2::before {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--hospital-success);
+        animation: expandWidth 0.6s ease-out;
+    }
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes expandWidth {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 60px;
+    }
+}
+
+/* Conteneur de formulaire */
+.row {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.row > div[class*="col-"] {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px var(--shadow-color);
+    border: 1px solid rgba(0, 102, 204, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+    .row > div[class*="col-"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--hospital-primary), var(--hospital-success), var(--hospital-secondary));
+    }
+
+/* Groupes de formulaire */
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem !important;
+}
+
+/* Étiquettes */
+.form-label {
+    font-weight: 600;
+    color: var(--hospital-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+    .form-label::before {
+        content: '▸';
+        color: var(--hospital-primary);
+        margin-right: 0.5rem;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+.form-group:focus-within .form-label::before {
+    transform: translateX(3px);
+    color: var(--hospital-success);
+}
+
+.form-label::after {
+    content: '*';
+    color: var(--hospital-danger);
+    margin-left: 0.25rem;
+    font-weight: bold;
+}
+
+/* Champs de saisie */
+.form-control,
+.form-select {
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: var(--input-bg);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+    .form-control:focus,
+    .form-select:focus {
+        border-color: var(--hospital-primary);
+        box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.15), inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        background-color: #ffffff;
+        outline: none;
+        transform: translateY(-1px);
+    }
+
+    .form-control::placeholder {
+        color: #adb5bd;
+        font-style: italic;
+        opacity: 0.7;
+    }
+
+    /* Animation de remplissage */
+    .form-control:valid,
+    .form-select:valid {
+        border-color: var(--hospital-success);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2300a86b' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1.2rem;
+        padding-right: 3rem;
+    }
+
+/* Select personnalisé */
+.form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%230066cc' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px 12px;
+    padding-right: 3rem;
+}
+
+    .form-select:focus {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2300a86b' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    }
+
+/* Messages de validation */
+.text-danger {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+    color: var(--hospital-danger);
+    font-weight: 500;
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.validation-summary-errors {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+    border-left: 4px solid var(--hospital-danger);
+    padding: 1.25rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.validation-summary-errors ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.validation-summary-errors li {
+    color: var(--hospital-danger);
+    font-weight: 500;
+}
+
+/* Boutons principaux */
+.btn {
+    border-radius: 10px;
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn i {
+        margin-right: 0.5rem;
+    }
+
+/* Bouton Success (Enregistrer/Modifier) */
+.btn-success {
+    background: linear-gradient(135deg, var(--hospital-success) 0%, #00c97d 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 168, 107, 0.3);
+}
+
+    .btn-success:hover {
+        background: linear-gradient(135deg, #008856 0%, var(--hospital-success) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 168, 107, 0.4);
+        color: white;
+    }
+
+    .btn-success:active {
+        transform: translateY(0);
+    }
+
+/* Bouton Danger (Supprimer) */
+.btn-danger {
+    background: linear-gradient(135deg, var(--hospital-danger) 0%, #e57373 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #c0392b 0%, var(--hospital-danger) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        color: white;
+    }
+
+/* Bouton Secondary (Retour/Annuler) */
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #868e96 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+}
+
+    .btn-secondary:hover {
+        background: linear-gradient(135deg, #5a6268 0%, #6c757d 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        color: white;
+    }
+
+/* Groupe de boutons */
+.form-group:last-child {
+    margin-top: 2rem !important;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--border-color);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Alerte de suppression */
+.alert-danger {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+    border: 2px solid var(--hospital-danger);
+    border-left: 5px solid var(--hospital-danger);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    color: #721c24;
+    font-size: 1.05rem;
+    box-shadow: 0 5px 20px rgba(231, 76, 60, 0.2);
+    animation: pulseAlert 2s infinite;
+}
+
+@keyframes pulseAlert {
+    0%, 100% {
+        box-shadow: 0 5px 20px rgba(231, 76, 60, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 8px 30px rgba(231, 76, 60, 0.4);
+    }
+}
+
+.alert-danger strong {
+    color: var(--hospital-danger);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.alert-danger::before {
+    content: '⚠';
+    font-size: 1.5rem;
+    margin-right: 0.75rem;
+    vertical-align: middle;
+}
+
+/* Inputs cachés - Style pour debugging */
+input[type="hidden"] {
+    display: none;
+}
+
+/* Date input personnalisé */
+input[type="date"] {
+    position: relative;
+    cursor: pointer;
+}
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        filter: brightness(0.8);
+        transition: all 0.3s ease;
+    }
+
+    input[type="date"]:hover::-webkit-calendar-picker-indicator {
+        filter: brightness(0.5);
+        transform: scale(1.1);
+    }
+
+/* Effet de chargement sur le bouton submit */
+.btn[type="submit"].loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+    .btn[type="submit"].loading::after {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 50%;
+        right: 1.5rem;
+        margin-top: -8px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.6s linear infinite;
+    }
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Badge d'information pour les champs optionnels */
+.form-control[placeholder*="optionnel"]::placeholder {
+    color: #6c757d;
+    font-style: italic;
+}
+
+/* Effet de focus sur le groupe entier */
+.form-group:focus-within {
+    background: linear-gradient(to right, rgba(0, 102, 204, 0.02), transparent);
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .row > div[class*="col-"] {
+        padding: 1.5rem;
+    }
+
+    .form-control,
+    .form-select {
+        padding: 0.75rem 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group:last-child {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* Amélioration de l'accessibilité */
+.form-control:focus,
+.form-select:focus,
+.btn:focus {
+    outline: 2px solid var(--hospital-primary);
+    outline-offset: 2px;
+}
+
+/* Indicateur de champ obligatoire hover */
+.form-label:hover::after {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Effet de progression visuelle */
+.form-group:has(.form-control:valid) .form-label,
+.form-group:has(.form-select:valid) .form-label {
+    color: var(--hospital-success);
+}
+
+/* Style pour le formulaire de suppression */
+form[asp-action="Delete"],
+form[action*="Delete"] {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* Animation d'entrée pour les formulaires */
+form {
+    animation: formFadeIn 0.5s ease-out;
+}
+
+@keyframes formFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Effet hover sur les champs */
+.form-control:hover,
+.form-select:hover {
+    border-color: var(--hospital-secondary);
+    box-shadow: 0 2px 8px rgba(0, 168, 232, 0.1);
+}
+
+/* Tooltip personnalisé pour les champs */
+.form-control[title]:hover::after,
+.form-select[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    background: var(--hospital-dark);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 0.5rem;
+}
+
+/* Séparateur visuel */
+.form-group:nth-child(4)::after {
+    content: '';
+    position: absolute;
+    bottom: -0.75rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+}

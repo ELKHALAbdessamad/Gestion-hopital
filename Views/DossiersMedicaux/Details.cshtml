@@ -1,0 +1,18 @@
+﻿@model HospitalManagement.Models.DossierMedical
+
+@{
+    ViewData["Title"] = "Détails du Dossier Médical";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Patient?.Nom @Model.Patient?.Prenom</h5>
+        <p class="card-text"><strong>Médecin :</strong> @Model.Medecin?.Nom @Model.Medecin?.Prenom</p>
+        <p class="card-text"><strong>Résumé :</strong> @Model.Resume</p>
+        <p class="card-text"><strong>Date de création :</strong> @Model.DateCreation.ToString("dd/MM/yyyy")</p>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

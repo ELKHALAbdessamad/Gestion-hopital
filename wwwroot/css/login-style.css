@@ -1,0 +1,324 @@
+﻿/* Style professionnel médical pour la page de connexion */
+
+/* Couleurs médicales professionnelles */
+:root {
+    --hospital-primary: #0066cc;
+    --hospital-secondary: #00a8e8;
+    --hospital-accent: #00c9b7;
+    --hospital-dark: #003d7a;
+    --hospital-light: #e8f4f8;
+    --medical-red: #dc3545;
+    --medical-green: #28a745;
+    --text-dark: #2c3e50;
+    --bg-gradient-start: #f0f8ff;
+    --bg-gradient-end: #e0f2f7;
+}
+
+/* Arrière-plan avec motif médical subtil */
+body {
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    position: relative;
+}
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: repeating-linear-gradient(90deg, rgba(0, 102, 204, 0.03) 0px, transparent 1px, transparent 50px, rgba(0, 102, 204, 0.03) 51px), repeating-linear-gradient(0deg, rgba(0, 102, 204, 0.03) 0px, transparent 1px, transparent 50px, rgba(0, 102, 204, 0.03) 51px);
+        z-index: -1;
+    }
+
+/* Carte de connexion */
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 61, 122, 0.15);
+    background: #ffffff;
+    margin-top: 3rem !important;
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--hospital-primary) 0%, var(--hospital-secondary) 100%);
+    border: none;
+    padding: 2rem 1.5rem;
+    position: relative;
+}
+
+    .card-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--hospital-accent), var(--medical-green));
+    }
+
+    .card-header h3 {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.5rem;
+        letter-spacing: 0.5px;
+    }
+
+    .card-header i {
+        margin-right: 0.5rem;
+        font-size: 1.3rem;
+    }
+
+.card-body {
+    padding: 2.5rem 2rem !important;
+    background: #ffffff;
+}
+
+/* Étiquettes des champs */
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+    .form-label i {
+        color: var(--hospital-primary);
+        margin-right: 0.5rem;
+        width: 18px;
+        text-align: center;
+    }
+
+/* Champs de formulaire */
+.form-control {
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+    .form-control:focus {
+        border-color: var(--hospital-primary);
+        box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.15);
+        background-color: #ffffff;
+        outline: none;
+    }
+
+    .form-control::placeholder {
+        color: #adb5bd;
+        font-style: italic;
+    }
+
+/* Case à cocher */
+.form-check {
+    padding-left: 1.75rem;
+}
+
+.form-check-input {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #ced4da;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .form-check-input:checked {
+        background-color: var(--hospital-primary);
+        border-color: var(--hospital-primary);
+    }
+
+    .form-check-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.15);
+        border-color: var(--hospital-primary);
+    }
+
+.form-check-label {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+/* Bouton de connexion */
+.btn-primary {
+    background: linear-gradient(135deg, var(--hospital-primary) 0%, var(--hospital-secondary) 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 0.875rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 102, 204, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .btn-primary:hover::before {
+        left: 100%;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 102, 204, 0.3);
+        background: linear-gradient(135deg, var(--hospital-dark) 0%, var(--hospital-primary) 100%);
+    }
+
+    .btn-primary:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px rgba(0, 102, 204, 0.2);
+    }
+
+    .btn-primary i {
+        margin-right: 0.5rem;
+    }
+
+/* Lien de création de compte */
+.btn-link {
+    color: var(--hospital-primary);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+    .btn-link:hover {
+        color: var(--hospital-dark);
+        background-color: var(--hospital-light);
+        text-decoration: none;
+    }
+
+/* Texte du centre */
+.text-center p {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Messages de validation */
+.text-danger {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+    color: var(--medical-red);
+    font-weight: 500;
+}
+
+.validation-summary-errors {
+    background-color: #fff5f5;
+    border-left: 4px solid var(--medical-red);
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+}
+
+    .validation-summary-errors ul {
+        margin: 0;
+        padding-left: 1.25rem;
+    }
+
+    .validation-summary-errors li {
+        color: var(--medical-red);
+        font-weight: 500;
+    }
+
+/* Animation d'entrée */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: slideUp 0.5s ease-out;
+}
+
+/* Badge médical décoratif */
+.card-header::after {
+    content: '⚕';
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+    opacity: 0.2;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .card-body {
+        padding: 2rem 1.5rem !important;
+    }
+
+    .card-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .card {
+        margin-top: 2rem !important;
+    }
+}
+
+/* Effet de focus sur l'input actif */
+.mb-3 {
+    position: relative;
+}
+
+.form-control:focus + .form-label {
+    color: var(--hospital-primary);
+}
+
+/* Amélioration de l'accessibilité */
+.form-control:focus,
+.form-check-input:focus,
+.btn:focus {
+    outline: 2px solid var(--hospital-primary);
+    outline-offset: 2px;
+}
+
+/* Indicateur de chargement optionnel sur le bouton */
+.btn-primary.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    right: 1rem;
+    margin-top: -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

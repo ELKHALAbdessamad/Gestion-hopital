@@ -1,0 +1,358 @@
+﻿/* ====================================
+   FIX FOOTER OVERLAP ISSUE
+   Solution pour éviter que le footer cache les boutons
+   ==================================== */
+
+/* 1. Espacement en bas du contenu principal */
+.container,
+.container-fluid,
+main,
+.main-content {
+    padding-bottom: 2rem;
+    margin-bottom: 0;
+}
+
+/* 2. Espacement supplémentaire pour les formulaires */
+form {
+    padding-bottom: 2rem;
+}
+
+/* 3. Espacement pour les groupes de boutons */
+.mt-3,
+.mt-4,
+.btn-group,
+.action-buttons {
+    margin-bottom: 2rem;
+}
+
+/* 4. Style du footer - TOUJOURS EN BAS ET COMPACT */
+footer {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    background: linear-gradient(135deg, #0066cc 0%, #004a99 100%);
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+    z-index: 100;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    margin-top: auto;
+}
+
+footer .container {
+    flex: none;
+}
+
+footer p {
+    margin: 0.25rem 0;
+    font-size: 0.85rem;
+}
+
+footer .footer-social {
+    margin: 0.5rem 0;
+}
+
+footer .footer-social a {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+}
+
+/* 5. Body avec flexbox pour footer en bas */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding-bottom: 0;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex-shrink: 0;
+    z-index: 1000;
+}
+
+.container {
+    flex: 1;
+}
+
+main {
+    flex: 1;
+}
+
+.contact-section {
+    flex-shrink: 0;
+}
+
+footer {
+    flex-shrink: 0;
+    margin-top: auto;
+    z-index: 100;
+}
+
+/* 7. Wrapper de contenu si besoin */
+.content-wrapper {
+    flex: 1;
+    padding-bottom: 2rem;
+}
+
+/* 8. Boutons d'action - visibilité garantie */
+.btn,
+button,
+input[type="submit"],
+input[type="button"] {
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* 9. Cards et conteneurs de formulaire */
+.card,
+.form-container,
+.details-container {
+    margin-bottom: 2rem;
+}
+
+.card-body {
+    padding-bottom: 1.5rem;
+}
+
+/* 10. Section de boutons en bas de page */
+.button-section,
+.form-actions,
+.mt-3.d-flex,
+.mt-4.d-flex {
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    background: white;
+    position: relative;
+    z-index: 10;
+}
+
+/* 11. Espacement spécifique pour les pages */
+/* Page Create */
+.create-page,
+[action*="Create"] {
+    padding-bottom: 120px !important;
+}
+
+/* Page Edit */
+.edit-page,
+[action*="Edit"] {
+    padding-bottom: 120px !important;
+}
+
+/* Page Delete */
+.delete-page,
+[action*="Delete"] {
+    padding-bottom: 120px !important;
+}
+
+/* Page Details */
+.details-page {
+    padding-bottom: 120px !important;
+}
+
+/* 12. Responsive - Mobile */
+@media (max-width: 768px) {
+    .container,
+    .container-fluid,
+    main {
+        padding-bottom: 2rem;
+    }
+
+    footer {
+        padding: 1.5rem 0;
+        font-size: 0.9rem;
+    }
+
+    body {
+        padding-bottom: 0;
+    }
+
+    .mt-3,
+    .mt-4,
+    .btn-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .card,
+    .form-container {
+        margin-bottom: 2rem;
+    }
+}
+
+/* 13. Responsive - Tablet */
+@media (max-width: 992px) {
+    .container,
+    .container-fluid {
+        padding-bottom: 2rem;
+    }
+
+    .mt-3,
+    .mt-4 {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* 14. Scroll smooth pour meilleure UX */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-bottom: 100px;
+}
+
+/* 15. Zone de sécurité pour les boutons flottants */
+.floating-buttons,
+.sticky-buttons {
+    position: sticky;
+    bottom: 90px;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    margin-top: 20px;
+}
+
+/* 16. Indicateur visuel de scroll */
+.scroll-indicator {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: var(--rdv-primary);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+    .scroll-indicator.visible {
+        opacity: 1;
+    }
+
+    .scroll-indicator:hover {
+        transform: scale(1.1);
+        background: var(--rdv-secondary);
+    }
+
+/* 17. Animation d'entrée pour les boutons */
+@keyframes buttonSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.btn,
+button {
+    animation: buttonSlideUp 0.4s ease-out;
+}
+
+/* 18. Protection contre le chevauchement sur toutes les pages */
+.row:last-child,
+.container > *:last-child,
+.card:last-child {
+    margin-bottom: 2rem;
+}
+
+/* 19. Style amélioré du footer */
+footer {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+/* 20. Classes utilitaires supplémentaires */
+.mb-footer-safe {
+    margin-bottom: 2rem;
+}
+
+.pb-footer-safe {
+    padding-bottom: 2rem;
+}
+
+.no-footer-overlap {
+    padding-bottom: 2rem;
+}
+
+/* 21. Fix pour les modals si nécessaire */
+.modal-footer {
+    position: relative !important;
+    margin-top: 20px;
+}
+
+/* 22. Print media - désactiver le footer fixe */
+@media print {
+    footer {
+        position: relative;
+    }
+
+    body {
+        padding-bottom: 0;
+    }
+
+    .container,
+    .container-fluid {
+        padding-bottom: 20px !important;
+    }
+}
+
+/* 23. Dark mode compatible */
+@media (prefers-color-scheme: dark) {
+    footer {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* 24. Accessibilité - focus visible */
+footer a:focus,
+footer button:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+}
+
+/* 25. Animation du footer au scroll */
+@keyframes footerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+footer {
+    animation: footerFadeIn 0.5s ease-out;
+}

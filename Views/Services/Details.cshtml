@@ -1,0 +1,27 @@
+﻿@model HospitalManagement.Models.Service
+
+@{
+    ViewData["Title"] = "Détails du Service";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Nom</h5>
+        <p class="card-text"><strong>Nombre de Médecins:</strong> @Model.Medecins?.Count() ?? 0</p>
+        @if (Model.Medecins != null && Model.Medecins.Any())
+        {
+            <p class="card-text"><strong>Médecins:</strong></p>
+            <ul>
+                @foreach (var med in Model.Medecins)
+                {
+                    <li>@med.Nom @med.Prenom</li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Modifier</a>
+<a asp-action="Index" class="btn btn-secondary">Retour</a>

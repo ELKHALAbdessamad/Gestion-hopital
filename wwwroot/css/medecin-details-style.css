@@ -1,0 +1,222 @@
+﻿/* Style professionnel médical pour la page Détails Médecin */
+
+/* Couleurs */
+:root {
+    --medecin-primary: #1e88e5;
+    --medecin-secondary: #42a5f5;
+    --medecin-info: #00bcd4;
+    --medecin-warning: #ff9800;
+    --medecin-dark: #263238;
+    --bg-light: #f5f7fa;
+}
+
+/* Arrière-plan */
+body {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f1f8ff 100%);
+    min-height: 100vh;
+}
+
+/* En-tête */
+h2 {
+    color: var(--medecin-dark);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--medecin-primary);
+    position: relative;
+    display: inline-block;
+}
+
+    h2::after {
+        content: '🩺';
+        position: absolute;
+        right: -2.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        opacity: 0.3;
+    }
+
+    h2::before {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--medecin-info);
+    }
+
+/* Card principale */
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(30, 136, 229, 0.15);
+    background: white;
+    position: relative;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--medecin-primary), var(--medecin-info), var(--medecin-secondary));
+}
+
+/* Card body */
+.card-body {
+    padding: 2.5rem;
+    position: relative;
+}
+
+/* Titre de la card */
+.card-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--medecin-primary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e1e8ed;
+    display: flex;
+    align-items: center;
+}
+
+    .card-title::before {
+        content: '👨‍⚕️';
+        font-size: 2rem;
+        margin-right: 1rem;
+        background: linear-gradient(135deg, var(--medecin-primary), var(--medecin-secondary));
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+/* Texte de la card */
+.card-text {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: linear-gradient(to right, #f8f9fa, transparent);
+    border-left: 3px solid var(--medecin-info);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+    .card-text:hover {
+        background: linear-gradient(to right, #e3f2fd, transparent);
+        transform: translateX(5px);
+        border-left-color: var(--medecin-primary);
+    }
+
+    .card-text strong {
+        color: var(--medecin-primary);
+        font-weight: 600;
+        display: inline-block;
+        min-width: 150px;
+        margin-right: 1rem;
+    }
+
+    /* Icônes pour chaque information */
+    .card-text:nth-of-type(1) strong::before {
+        content: '🎓 ';
+    }
+
+    .card-text:nth-of-type(2) strong::before {
+        content: '📧 ';
+    }
+
+    .card-text:nth-of-type(3) strong::before {
+        content: '🆔 ';
+    }
+
+    .card-text:nth-of-type(4) strong::before {
+        content: '🏥 ';
+    }
+
+    .card-text:nth-of-type(5) strong::before {
+        content: '📅 ';
+    }
+
+/* Boutons d'action */
+.btn {
+    border-radius: 10px;
+    padding: 0.75rem 1.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-right: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+/* Bouton Warning */
+.btn-warning {
+    background: linear-gradient(135deg, var(--medecin-warning) 0%, #ffa726 100%);
+    color: white;
+}
+
+    .btn-warning:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        color: white;
+    }
+
+/* Bouton Secondary */
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #868e96 100%);
+    color: white;
+}
+
+    .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        color: white;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
+    .card-text strong {
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 0.75rem;
+    }
+}

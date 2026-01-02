@@ -1,0 +1,244 @@
+/* ===== ANIMATIONS GLOBALES ===== */
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ===== ANIMATION CLASSES ===== */
+
+.animate-in {
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.animate-fade {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-scale {
+    animation: scaleIn 0.6s ease-out forwards;
+}
+
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-bounce {
+    animation: bounce 1s ease-in-out infinite;
+}
+
+/* ===== TRANSITION UTILITIES ===== */
+
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+.transition-transform {
+    transition: transform 0.3s ease;
+}
+
+.transition-opacity {
+    transition: opacity 0.3s ease;
+}
+
+.transition-colors {
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ===== HOVER EFFECTS ===== */
+
+.hover-lift {
+    transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.hover-glow {
+    transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 20px rgba(0, 102, 204, 0.4);
+}
+
+/* ===== LOADING ANIMATIONS ===== */
+
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 102, 204, 0.3);
+    border-radius: 50%;
+    border-top-color: #0066cc;
+    animation: rotate 1s linear infinite;
+}
+
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ===== STAGGER ANIMATIONS ===== */
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* ===== SCROLL ANIMATIONS ===== */
+
+.scroll-fade {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.scroll-slide-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideInUp 0.8s ease-out forwards;
+}
+
+.scroll-slide-left {
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.scroll-slide-right {
+    opacity: 0;
+    transform: translateX(30px);
+    animation: slideInRight 0.8s ease-out forwards;
+}
+
+/* ===== RESPONSIVE ANIMATIONS ===== */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .animate-in {
+        animation-duration: 0.4s;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-3px);
+    }
+
+    .hover-scale:hover {
+        transform: scale(1.02);
+    }
+}

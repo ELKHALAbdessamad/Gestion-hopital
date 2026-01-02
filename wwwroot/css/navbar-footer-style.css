@@ -1,0 +1,479 @@
+﻿/* Style professionnel pour Navbar et Footer - Version Corrigée */
+
+/* ========================================
+   NAVBAR - Bleu Médical Professionnel
+======================================== */
+
+/* Navbar principale */
+.navbar {
+    background: linear-gradient(135deg, #0066cc 0%, #0080ff 50%, #0066cc 100%) !important;
+    box-shadow: 0 4px 20px rgba(0, 102, 204, 0.3);
+    padding: 0.75rem 1rem;
+    border-bottom: 3px solid #4a9eff;
+    position: sticky !important;
+    top: 0;
+    z-index: 1030;
+    overflow: visible;
+}
+
+    .navbar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: navbarShine 3s infinite;
+    }
+
+@keyframes navbarShine {
+    0%, 100% {
+        left: -100%;
+    }
+
+    50% {
+        left: 100%;
+    }
+}
+
+/* Brand/Logo */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: white !important;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+    .navbar-brand::before {
+        content: '⚕️';
+        font-size: 1.8rem;
+        margin-right: 0.75rem;
+        animation: pulse 2s infinite;
+    }
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.navbar-brand:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Liens de navigation */
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    margin: 0 0.25rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+    .navbar-nav .nav-link::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: #4a9eff;
+        transition: width 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: white !important;
+        transform: translateY(-2px);
+    }
+
+        .navbar-nav .nav-link:hover::before {
+            width: 80%;
+        }
+
+    .navbar-nav .nav-link.active {
+        background: rgba(255, 255, 255, 0.2);
+        color: white !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+/* Dropdown menu - FIX pour le problème de visibilité */
+.navbar-nav .dropdown-menu {
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 102, 204, 0.2);
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    min-width: 200px;
+    animation: dropdownFadeIn 0.3s ease-out;
+    position: absolute !important;
+    z-index: 1050 !important;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar-nav .dropdown-item {
+    color: #0066cc !important;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+    .navbar-nav .dropdown-item:hover {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        color: #0052a3 !important;
+        transform: translateX(5px);
+    }
+
+    .navbar-nav .dropdown-item i {
+        margin-right: 0.5rem;
+        width: 20px;
+        text-align: center;
+    }
+
+/* Dropdown toggle (bouton du profil) */
+.navbar-nav .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .navbar-nav .dropdown-toggle::after {
+        margin-left: 0.5rem;
+    }
+
+/* Toggler pour mobile */
+.navbar-toggler {
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+}
+
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 0.25rem rgba(74, 158, 255, 0.5);
+    }
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Menu mobile responsive */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background: rgba(0, 102, 204, 0.98);
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar-nav .dropdown-menu {
+        background: rgba(255, 255, 255, 0.95);
+        margin-top: 0.5rem;
+        margin-left: 1rem;
+    }
+}
+
+/* ========================================
+   FOOTER - Créatif et Compact
+======================================== */
+
+footer {
+    background: linear-gradient(135deg, #0066cc 0%, #0080ff 100%);
+    color: white;
+    padding: 1.5rem 0;
+    margin-top: 3rem;
+    box-shadow: 0 -4px 20px rgba(0, 102, 204, 0.3);
+    border-top: 3px solid #4a9eff;
+    position: relative;
+}
+
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #4a9eff, #00bcd4, #4a9eff, transparent);
+        animation: footerLine 3s infinite;
+    }
+
+@keyframes footerLine {
+    0%, 100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Container du footer */
+footer .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Section principale */
+.footer-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Logo/Nom de l'hôpital */
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+    .footer-brand::before {
+        content: '⚕️';
+        font-size: 1.8rem;
+        animation: rotate 10s linear infinite;
+    }
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Liens rapides */
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+    .footer-links a {
+        color: rgba(255, 255, 255, 0.9);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.25rem 0.75rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+        .footer-links a::before {
+            content: '▸';
+            margin-right: 0.35rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            transform: translateX(5px);
+        }
+
+            .footer-links a:hover::before {
+                opacity: 1;
+            }
+
+/* Icônes sociales */
+.footer-social {
+    display: flex;
+    gap: 1rem;
+}
+
+    .footer-social a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+    }
+
+        .footer-social a:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px) rotate(5deg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+/* Copyright */
+.footer-copyright {
+    text-align: center;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+}
+
+    .footer-copyright::before {
+        content: '© ';
+        font-weight: bold;
+    }
+
+    .footer-copyright strong {
+        color: #4a9eff;
+        font-weight: 700;
+    }
+
+/* Badge "Fait avec ❤️" */
+.footer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+    .footer-badge::before {
+        content: '💙';
+        animation: heartbeat 1.5s infinite;
+    }
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    25% {
+        transform: scale(1.2);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+
+    .navbar-nav {
+        padding-top: 1rem;
+    }
+
+        .navbar-nav .nav-link {
+            margin: 0.25rem 0;
+        }
+
+    footer {
+        padding: 1.25rem 0;
+    }
+
+    .footer-main {
+        gap: 1rem;
+    }
+
+    .footer-brand {
+        font-size: 1.1rem;
+    }
+
+    .footer-links {
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .footer-social a {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+
+    .footer-copyright {
+        font-size: 0.85rem;
+    }
+}
+
+/* Effet de défilement sur la navbar */
+.navbar.scrolled {
+    box-shadow: 0 6px 30px rgba(0, 102, 204, 0.4);
+    padding: 0.5rem 1rem;
+}
+
+/* Animation au chargement */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar {
+    animation: fadeInDown 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+footer {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+/* Fix pour éviter que le contenu soit caché sous la navbar */
+body {
+    padding-top: 70px;
+}
+
+/* Ajustement pour la navbar sticky */
+main {
+    min-height: calc(100vh - 200px);
+}

@@ -1,0 +1,48 @@
+﻿@model HospitalManagement.Models.DossierMedical
+@{
+    ViewData["Title"] = "Supprimer le Dossier Médical";
+}
+
+<h2 class="text-danger">@ViewData["Title"]</h2>
+
+<div class="alert alert-warning" role="alert">
+    <i class="fas fa-exclamation-triangle"></i>
+    <strong>Attention !</strong> Cette action est irréversible.
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">Informations du dossier médical à supprimer</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Patient</dt>
+                    <dd class="col-sm-8">@(Model.Patient?.Nom ?? "N/A") @(Model.Patient?.Prenom ?? "")</dd>
+
+                    <dt class="col-sm-4">Médecin</dt>
+                    <dd class="col-sm-8">@(Model.Medecin?.Nom ?? "N/A") @(Model.Medecin?.Prenom ?? "")</dd>
+
+                    <dt class="col-sm-4">Date de création</dt>
+                    <dd class="col-sm-8">@Model.DateCreation.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                    <dt class="col-sm-4">Résumé</dt>
+                    <dd class="col-sm-8">@Model.Resume</dd>
+                </dl>
+            </div>
+        </div>
+
+        <form asp-action="Delete" method="post" class="mt-3">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous absolument sûr de vouloir supprimer ce dossier médical ?');">
+                <i class="fas fa-trash"></i> Confirmer la suppression
+            </button>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Annuler
+            </a>
+        </form>
+    </div>
+</div>

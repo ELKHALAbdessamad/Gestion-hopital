@@ -1,0 +1,588 @@
+﻿@model HospitalManagement.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@section Styles {
+    <style>
+        :root {
+            --primary: #0066cc;
+            --primary-light: #e6f2ff;
+            --primary-dark: #004a99;
+            --secondary: #00a3e0;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --dark: #2c3e50;
+            --light: #f5f7fa;
+            --border: #e0e6ed;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f4f8 0%, #e6f2ff 50%, #f0f4f8 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+        }
+
+        @@keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container-fluid {
+            position: relative;
+            z-index: 1;
+            padding-bottom: 120px;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        @@keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header p {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .date-time {
+            color: var(--primary);
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @@keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid var(--primary);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-light), transparent);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15);
+        }
+
+        .stat-card .icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover .icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .stat-card.patients .icon {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .stat-card.medecins .icon {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .stat-card.rdv .icon {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+        }
+
+        .stat-card.services .icon {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .stat-card p {
+            color: #666;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .trend {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--success), #00c97d);
+            color: white;
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid var(--primary);
+        }
+
+        .chart-card h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chart-card h4 i {
+            color: var(--primary);
+        }
+
+        .chart-placeholder {
+            height: 250px;
+        }
+
+        .activity-feed {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            border-top: 4px solid var(--primary);
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .activity-feed h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .activity-feed h4 i {
+            color: var(--primary);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-left: 3px solid var(--primary);
+            margin-bottom: 1rem;
+            background: var(--primary-light);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+        }
+
+        .activity-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .activity-item.new .activity-icon {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        .activity-item.update .activity-icon {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .activity-item.alert .activity-icon {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .activity-content h5 {
+            margin: 0 0 0.25rem 0;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .activity-content p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .activity-time {
+            margin-left: auto;
+            color: #999;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.8s backwards;
+        }
+
+        .action-btn {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--dark);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid var(--primary);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15);
+            color: var(--dark);
+        }
+
+        .action-btn i {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .action-btn.patients i {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .action-btn.medecins i {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .action-btn.rdv i {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .action-btn.services i {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+        }
+
+        .action-btn span {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        @@media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid,
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .date-time {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+}
+
+<div class="container-fluid">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <h1><i class="fas fa-hospital"></i> Tableau de Bord</h1>
+        <p>Bienvenue dans votre système de gestion hospitalière</p>
+        <div class="date-time">
+            <span><i class="fas fa-calendar"></i> <span id="currentDate"></span></span>
+            <span><i class="fas fa-clock"></i> <span id="currentTime"></span></span>
+        </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <div class="stat-card patients stagger-item">
+            <span class="trend"><i class="fas fa-arrow-up"></i> +12%</span>
+            <div class="icon"><i class="fas fa-user-injured"></i></div>
+            <h3 data-target="@(Model?.TotalPatients ?? 0)">0</h3>
+            <p>Patients Enregistrés</p>
+        </div>
+
+        <div class="stat-card medecins stagger-item">
+            <span class="trend"><i class="fas fa-arrow-up"></i> +8%</span>
+            <div class="icon"><i class="fas fa-user-md"></i></div>
+            <h3 data-target="@(Model?.TotalMedecins ?? 0)">0</h3>
+            <p>Médecins Actifs</p>
+        </div>
+
+        <div class="stat-card rdv stagger-item">
+            <span class="trend"><i class="fas fa-arrow-up"></i> +25%</span>
+            <div class="icon"><i class="fas fa-calendar-check"></i></div>
+            <h3 data-target="@(Model?.RendezvousAujourdhui ?? 0)">0</h3>
+            <p>Rendez-vous Aujourd'hui</p>
+        </div>
+
+        <div class="stat-card services stagger-item">
+            <span class="trend"><i class="fas fa-arrow-up"></i> +5%</span>
+            <div class="icon"><i class="fas fa-hospital"></i></div>
+            <h3 data-target="@(Model?.TotalServices ?? 0)">0</h3>
+            <p>Services Médicaux</p>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+        <div class="chart-card">
+            <h4><i class="fas fa-chart-line"></i> Rendez-vous par Semaine</h4>
+            <div class="chart-placeholder">
+                <canvas id="rdvChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h4><i class="fas fa-chart-pie"></i> Répartition par Service</h4>
+            <div class="chart-placeholder">
+                <canvas id="servicesChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Feed -->
+    <div class="activity-feed">
+        <h4><i class="fas fa-bell"></i> Activités Récentes</h4>
+
+        @if (Model?.RecentActivities != null && Model.RecentActivities.Any())
+        {
+            @foreach (var activity in Model.RecentActivities)
+            {
+                <div class="activity-item @activity.Type">
+                    <div class="activity-icon"><i class="@activity.Icon"></i></div>
+                    <div class="activity-content">
+                        <h5>@activity.Title</h5>
+                        <p>@activity.Description</p>
+                    </div>
+                    <span class="activity-time">@activity.TimeAgo</span>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="activity-item new">
+                <div class="activity-icon"><i class="fas fa-info-circle"></i></div>
+                <div class="activity-content">
+                    <h5>Système Actif</h5>
+                    <p>Le système de gestion hospitalière est opérationnel</p>
+                </div>
+                <span class="activity-time">Maintenant</span>
+            </div>
+        }
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <a asp-controller="Patients" asp-action="Create" class="action-btn patients">
+            <i class="fas fa-user-plus"></i>
+            <span>Nouveau Patient</span>
+        </a>
+
+        <a asp-controller="Medecins" asp-action="Create" class="action-btn medecins">
+            <i class="fas fa-user-md"></i>
+            <span>Nouveau Médecin</span>
+        </a>
+
+        <a asp-controller="RendezVous" asp-action="Create" class="action-btn rdv">
+            <i class="fas fa-calendar-plus"></i>
+            <span>Nouveau Rendez-vous</span>
+        </a>
+
+        <a asp-controller="Services" asp-action="Create" class="action-btn services">
+            <i class="fas fa-hospital"></i>
+            <span>Nouveau Service</span>
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        // Date and Time
+        function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('fr-FR', dateOptions);
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString('fr-FR');
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Rendez-vous Chart
+        const rdvCtx = document.getElementById('rdvChart').getContext('2d');
+        new Chart(rdvCtx, {
+            type: 'line',
+            data: {
+                labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+                datasets: [{
+                    label: 'Rendez-vous',
+                    data: @Html.Raw(Json.Serialize(Model?.RendezvousParJour ?? new int[] { 0, 0, 0, 0, 0, 0, 0 })),
+                    borderColor: 'rgb(0, 102, 204)',
+                    backgroundColor: 'rgba(0, 102, 204, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 3,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgb(0, 102, 204)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Services Chart
+        const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+        new Chart(servicesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model?.ServicesLabels ?? new string[] { "Cardiologie", "Pédiatrie", "Urgences" })),
+                datasets: [{
+                    data: @Html.Raw(Json.Serialize(Model?.ServicesData ?? new int[] { 25, 20, 30 })),
+                    backgroundColor: [
+                        'rgb(0, 102, 204)',
+                        'rgb(0, 163, 224)',
+                        'rgb(67, 233, 123)',
+                        'rgb(240, 147, 251)',
+                        'rgb(255, 152, 0)'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+}
