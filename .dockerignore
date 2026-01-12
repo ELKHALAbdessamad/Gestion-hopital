@@ -1,0 +1,13 @@
+bin/
+obj/
+out/
+.vs/
+.vscode/
+*.user
+*.suo
+.git/
+.gitignore
+README.md
+GUIDE_DEPLOIEMENT.md
+DEPLOIEMENT_RAILWAY.md
+GUIDE_SOUTENANCE_COMPLET.md

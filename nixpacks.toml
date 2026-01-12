@@ -2,7 +2,7 @@
 nixPkgs = ["dotnet-sdk_6"]
 
 [phases.build]
-cmds = ["dotnet publish -c Release -o out"]
+cmds = ["dotnet publish -c Release -o /app/out"]
 
 [start]
-cmd = "cd out && dotnet HospitalManagement.dll"
+cmd = "dotnet /app/out/HospitalManagement.dll"
