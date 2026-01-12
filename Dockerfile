@@ -15,11 +15,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /app/publish .
 
-# Set environment variables
-ENV ASPNETCORE_URLS=http://+:$PORT
-
-# Expose port
-EXPOSE $PORT
+# Expose port (Railway injecte automatiquement $PORT)
+EXPOSE 8080
 
 # Start the application
-ENTRYPOINT ["dotnet", "HospitalManagement.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet HospitalManagement.dll
