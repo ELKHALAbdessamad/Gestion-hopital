@@ -6,61 +6,159 @@
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-CC2927?logo=microsoft-sql-server)](https://www.microsoft.com/sql-server)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## 📋 Description
+> Application web complète de gestion hospitalière développée avec ASP.NET Core MVC 6.0
 
-Application web complète de gestion hospitalière développée avec **ASP.NET Core MVC 6.0**. Ce système permet la gestion efficace des patients, médecins, services, rendez-vous et dossiers médicaux avec un système d'authentification et d'autorisation par rôles.
+## 📋 À Propos du Projet
+
+**Hospital Management System** est une solution web moderne et sécurisée conçue pour digitaliser et optimiser la gestion quotidienne d'un établissement hospitalier. Le système centralise toutes les opérations administratives et médicales dans une plateforme unique, intuitive et accessible.
+
+### 🎯 Objectifs
+
+- ✅ Digitaliser la gestion des dossiers patients
+- ✅ Automatiser la planification des rendez-vous
+- ✅ Centraliser les informations médicales
+- ✅ Améliorer la communication entre services
+- ✅ Sécuriser l'accès aux données sensibles
+- ✅ Optimiser les processus administratifs
+
 
 ### ✨ Fonctionnalités Principales
 
-- 🔐 **Authentification sécurisée** avec ASP.NET Core Identity
-- 👥 **Gestion multi-rôles** (Admin, Médecin, Réceptionniste, Patient)
-- 🏥 **Gestion des services** hospitaliers
-- 👨‍⚕️ **Gestion des médecins** et leurs spécialités
-- 🧑‍🤝‍🧑 **Gestion des patients** avec informations complètes
-- 📅 **Système de rendez-vous** avec vérification de disponibilité
-- 📋 **Dossiers médicaux** électroniques
-- 🎨 **Interface responsive** avec Bootstrap 5
-- 🌍 **Localisation française** complète
+#### 🔐 Gestion Multi-Rôles
+- **Administrateur** : Accès complet, gestion des médecins et services
+- **Réceptionniste** : Gestion des patients et rendez-vous
+- **Médecin** : Consultation des rendez-vous et gestion des dossiers médicaux
+- **Patient** : Consultation de ses rendez-vous et dossiers médicaux
+
+#### 👥 Gestion des Patients
+- Création et modification des fiches patients
+- Historique médical complet
+- Informations détaillées (coordonnées, sécurité sociale, etc.)
+- Recherche et filtrage avancés
+
+#### 👨‍⚕️ Gestion des Médecins
+- Profils des médecins avec spécialités
+- Assignation aux services hospitaliers
+- Gestion des licences médicales
+- Suivi des rendez-vous
+
+#### 📅 Système de Rendez-vous
+- Planification intelligente avec vérification de disponibilité
+- Gestion des statuts (Planifié, Confirmé, Annulé, Terminé)
+- Filtrage par patient, médecin ou date
+- Détection automatique des conflits d'horaires
+
+#### 📋 Dossiers Médicaux Électroniques
+- Création de dossiers par les médecins
+- Diagnostics, traitements et observations
+- Historique complet des consultations
+- Accès sécurisé selon les rôles
+
+#### 🏥 Gestion des Services
+- Organisation par départements (Cardiologie, Pédiatrie, etc.)
+- Capacité d'accueil et emplacements
+- Assignation des médecins
+- Informations de contact
+
+#### 🎨 Interface Moderne
+- Design responsive avec Bootstrap 5
+- Navigation intuitive
+- Messages de confirmation/erreur
+- Tableaux de bord avec statistiques
 
 ## 🚀 Technologies Utilisées
 
 ### Backend
 - **Framework** : ASP.NET Core 6.0 MVC
-- **ORM** : Entity Framework Core 6.0
-- **Base de données** : SQL Server
-- **Authentification** : ASP.NET Core Identity
 - **Langage** : C# 10
+- **ORM** : Entity Framework Core 6.0
+- **Authentification** : ASP.NET Core Identity
+- **Base de données** : SQL Server
 
 ### Frontend
 - **Template Engine** : Razor Views
 - **CSS Framework** : Bootstrap 5
+- **JavaScript** : jQuery
 - **Icons** : Font Awesome
-- **JavaScript** : Vanilla JS
 
-## 📊 Architecture
+### Outils
+- **IDE** : Visual Studio 2022 / VS Code
+- **Contrôle de version** : Git & GitHub
+- **Base de données** : SQL Server Management Studio
+- **Package Manager** : NuGet
+
+
+## 📊 Architecture du Projet
+
+### Pattern MVC (Model-View-Controller)
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    UTILISATEUR                          │
+└────────────────────┬────────────────────────────────────┘
+                     │ Requête HTTP
+                     ▼
+┌─────────────────────────────────────────────────────────┐
+│                  CONTROLLER                             │
+│  - Traite les requêtes                                  │
+│  - Exécute la logique métier                            │
+│  - Coordonne Model et View                              │
+└────────────────────┬────────────────────────────────────┘
+                     │
+        ┌────────────┴────────────┐
+        ▼                         ▼
+┌──────────────┐          ┌──────────────┐
+│    MODEL     │          │     VIEW     │
+│  - Entités   │          │  - Razor     │
+│  - Données   │          │  - HTML/CSS  │
+│  - Logique   │          │  - Interface │
+└──────┬───────┘          └──────────────┘
+       │
+       ▼
+┌──────────────┐
+│  DATABASE    │
+│  SQL Server  │
+└──────────────┘
+```
+
+### Structure des Dossiers
 
 ```
 HospitalManagement/
-├── Controllers/          # Contrôleurs MVC (logique métier)
+├── Controllers/              # Contrôleurs MVC
 │   ├── AccountController.cs
 │   ├── PatientsController.cs
 │   ├── MedecinsController.cs
 │   ├── RendezVousController.cs
 │   ├── DossiersMedicauxController.cs
 │   └── ServicesController.cs
-├── Models/              # Modèles de données (entités)
+│
+├── Models/                   # Entités de données
 │   ├── Patient.cs
 │   ├── Medecin.cs
 │   ├── RendezVous.cs
 │   ├── DossierMedical.cs
-│   └── Service.cs
-├── Views/               # Vues Razor (interface utilisateur)
-├── Data/                # Contexte de base de données
+│   ├── Service.cs
+│   └── ApplicationUser.cs
+│
+├── Views/                    # Vues Razor
+│   ├── Account/
+│   ├── Patients/
+│   ├── Medecins/
+│   ├── RendezVous/
+│   ├── DossiersMedicaux/
+│   ├── Services/
+│   └── Shared/
+│
+├── Data/                     # Accès aux données
 │   ├── ApplicationDbContext.cs
 │   └── SeedData.cs
-├── ViewModels/          # Modèles pour les vues
-├── Migrations/          # Migrations Entity Framework
-└── wwwroot/            # Fichiers statiques (CSS, JS, images)
+│
+├── ViewModels/               # Modèles pour les vues
+├── Migrations/               # Migrations EF Core
+├── Authorization/            # Gestion des autorisations
+├── Middleware/               # Middleware personnalisé
+└── wwwroot/                  # Fichiers statiques
 ```
 
 ## 🔐 Système de Rôles
@@ -85,72 +183,150 @@ HospitalManagement/
 - Accès à ses dossiers médicaux
 - Gestion de son profil
 
-## 📦 Installation
+
+## 📦 Installation et Configuration
 
 ### Prérequis
 
-- [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
-- [SQL Server](https://www.microsoft.com/sql-server) (LocalDB ou instance complète)
+Avant de commencer, assurez-vous d'avoir installé :
+
+- [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) ou supérieur
+- [SQL Server](https://www.microsoft.com/sql-server) (LocalDB, Express ou version complète)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/) ou [VS Code](https://code.visualstudio.com/)
+- [Git](https://git-scm.com/)
 
-### Étapes d'installation
+### Installation Étape par Étape
 
-1. **Cloner le dépôt**
+#### 1. Cloner le Dépôt
+
 ```bash
-git clone https://github.com/ELKHALAbdessamad/Gestion-d-h-pital.git
-cd Gestion-d-h-pital
+git clone https://github.com/ELKHALAbdessamad/Gestion-hopital.git
+cd Gestion-hopital
 ```
 
-2. **Restaurer les packages NuGet**
+#### 2. Restaurer les Packages NuGet
+
 ```bash
 dotnet restore
 ```
 
-3. **Configurer la chaîne de connexion**
+#### 3. Configurer la Base de Données
 
-Modifiez `appsettings.json` avec votre chaîne de connexion SQL Server :
+Modifiez le fichier `appsettings.json` avec votre chaîne de connexion SQL Server :
+
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=HospitalDB;Trusted_Connection=True;"
+    "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=HospitalDB;Trusted_Connection=True;MultipleActiveResultSets=true"
   }
 }
 ```
 
-4. **Appliquer les migrations**
+**Options de connexion :**
+
+- **LocalDB** (développement) :
+  ```
+  Server=(localdb)\\mssqllocaldb;Database=HospitalDB;Trusted_Connection=True;
+  ```
+
+- **SQL Server Express** :
+  ```
+  Server=localhost\\SQLEXPRESS;Database=HospitalDB;Trusted_Connection=True;
+  ```
+
+- **SQL Server avec authentification** :
+  ```
+  Server=localhost;Database=HospitalDB;User Id=sa;Password=VotreMotDePasse;
+  ```
+
+#### 4. Appliquer les Migrations
+
 ```bash
 dotnet ef database update
 ```
 
-5. **Lancer l'application**
+Cette commande va :
+- Créer la base de données `HospitalDB`
+- Créer toutes les tables nécessaires
+- Initialiser les données de test
+
+#### 5. Lancer l'Application
+
 ```bash
 dotnet run
 ```
 
-6. **Accéder à l'application**
+L'application sera accessible sur :
+- **HTTPS** : `https://localhost:5001`
+- **HTTP** : `http://localhost:5000`
 
-Ouvrez votre navigateur et allez sur : `https://localhost:5001`
+### 🔑 Comptes de Test
 
-## 🔑 Comptes de Test
+Au premier démarrage, l'application crée automatiquement des comptes de test :
 
-L'application crée automatiquement des comptes de test au premier démarrage :
+| Rôle | Email | Mot de passe | Accès |
+|------|-------|--------------|-------|
+| **Admin** | admin@hospital.com | Admin123! | Accès complet |
+| **Réceptionniste** | receptionniste@hospital.com | Receptionniste123! | Patients, Rendez-vous |
+| **Médecin** | medecin@hospital.com | Medecin123! | Rendez-vous, Dossiers |
+| **Patient** | patient@hospital.com | Patient123! | Ses rendez-vous et dossiers |
 
-| Rôle | Email | Mot de passe |
-|------|-------|--------------|
-| Admin | admin@hospital.com | Admin123! |
-| Réceptionniste | receptionniste@hospital.com | Receptionniste123! |
-| Médecin | medecin@hospital.com | Medecin123! |
-| Patient | patient@hospital.com | Patient123! |
+### 📊 Données de Démonstration
 
-## 📊 Données de Démonstration
-
-Au premier lancement, l'application charge automatiquement :
-
+L'application charge automatiquement :
 - ✅ **6 services** : Cardiologie, Pédiatrie, Urgences, Chirurgie, Orthopédie, Dermatologie
 - ✅ **6 médecins** : Un par service avec spécialités
 - ✅ **5 patients** : Avec informations complètes
 - ✅ **6 rendez-vous** : Programmés dans les prochains jours
 - ✅ **6 dossiers médicaux** : Avec diagnostics et traitements
+
+## 🛠️ Commandes Utiles
+
+### Entity Framework
+
+```bash
+# Créer une nouvelle migration
+dotnet ef migrations add NomDeLaMigration
+
+# Appliquer les migrations
+dotnet ef database update
+
+# Supprimer la dernière migration
+dotnet ef migrations remove
+
+# Réinitialiser la base de données
+dotnet ef database drop --force
+dotnet ef database update
+```
+
+### Build et Run
+
+```bash
+# Compiler le projet
+dotnet build
+
+# Lancer en mode développement
+dotnet run
+
+# Lancer en mode production
+dotnet run --configuration Release
+
+# Publier l'application
+dotnet publish -c Release -o ./publish
+
+# Nettoyer les fichiers de build
+dotnet clean
+```
+
+### Tests
+
+```bash
+# Exécuter les tests
+dotnet test
+
+# Exécuter les tests avec couverture
+dotnet test /p:CollectCoverage=true
+```
 
 ## 🎯 Fonctionnalités Détaillées
 
@@ -264,7 +440,7 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 **ELKHAL Abdessamad**
 
 - GitHub: [@ELKHALAbdessamad](https://github.com/ELKHALAbdessamad)
-- Email: [Votre email]
+- Email: [Elkhalabdessamad000@gmail.com]
 
 ## 🙏 Remerciements
 

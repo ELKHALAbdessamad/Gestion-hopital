@@ -12,14 +12,25 @@ namespace HospitalManagement.Data
     {
         public static async Task InitializeAsync(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            // Vérifier si les données existent déjà
-            if (context.Services.Any() && context.Patients.Any() && context.Medecins.Any())
-            {
-                Console.WriteLine("✅ Les données de test existent déjà.");
-                return;
-            }
-
             Console.WriteLine("🔄 Chargement des données de test...");
+
+            // Vérifier si les données existent déjà
+            bool hasData = context.Services.Any() || context.Patients.Any() || context.Medecins.Any();
+            
+            if (hasData)
+            {
+                Console.WriteLine("⚠️ Suppression des anciennes données...");
+                
+                // Supprimer dans l'ordre pour respecter les contraintes de clés étrangères
+                context.DossiersMedicaux.RemoveRange(context.DossiersMedicaux);
+                context.RendezVous.RemoveRange(context.RendezVous);
+                context.Medecins.RemoveRange(context.Medecins);
+                context.Patients.RemoveRange(context.Patients);
+                context.Services.RemoveRange(context.Services);
+                
+                await context.SaveChangesAsync();
+                Console.WriteLine("✅ Anciennes données supprimées.");
+            }
 
             // ===== SERVICES =====
             var services = new List<Service>
