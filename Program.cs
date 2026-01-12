@@ -14,20 +14,27 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
     ?? Environment.GetEnvironmentVariable("DATABASE_URL");
 
+// Convertir l'URL PostgreSQL si nécessaire (Railway format)
+if (!string.IsNullOrEmpty(connectionString) && connectionString.StartsWith("postgresql://"))
+{
+    connectionString = connectionString.Replace("postgresql://", "postgres://");
+}
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     // Détection automatique du type de base de données
     if (!string.IsNullOrEmpty(connectionString) && 
-        (connectionString.Contains("postgres") || connectionString.Contains("DATABASE_URL")))
+        (connectionString.Contains("postgres://") || connectionString.Contains("@")))
     {
         // PostgreSQL (Railway, Render, etc.)
         options.UseNpgsql(connectionString);
         Console.WriteLine("✅ Utilisation de PostgreSQL");
+        Console.WriteLine($"✅ Connection string: {connectionString.Substring(0, Math.Min(50, connectionString.Length))}...");
     }
     else
     {
         // SQL Server (Azure, Local)
-        options.UseSqlServer(connectionString);
+        options.UseSqlServer(connectionString ?? "");
         Console.WriteLine("✅ Utilisation de SQL Server");
     }
 });
@@ -107,14 +114,23 @@ app.UseAuthorization();
 // ==============================
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-    // ✅ Crée les rôles si pas existants
-    string[] roles = { "Admin", "Medecin", "Receptionniste", "Patient" };
-    foreach (var role in roles)
+    try
     {
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+        Console.WriteLine("🔄 Application des migrations...");
+        await db.Database.MigrateAsync();
+        Console.WriteLine("✅ Migrations appliquées avec succès");
+
+        // ✅ Crée les rôles si pas existants
+        string[] roles = { "Admin", "Medecin", "Receptionniste", "Patient" };
+        foreach (var role in roles)
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+                await roleManager.CreateAsync(new IdentityRole(role));
+        }
 
         if (!await roleManager.RoleExistsAsync(role))
             await roleManager.CreateAsync(new IdentityRole(role));
@@ -262,7 +278,16 @@ using (var scope = app.Services.CreateScope())
     }
 
     // ✅ Seed les données de test
-    await SeedData.InitializeAsync(db, userManager);
+        await SeedData.InitializeAsync(db, userManager);
+        
+        Console.WriteLine("✅ Initialisation terminée avec succès");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"❌ ERREUR lors de l'initialisation: {ex.Message}");
+        Console.WriteLine($"❌ Stack trace: {ex.StackTrace}");
+        throw; // Re-throw pour que Railway voit l'erreur
+    }
 }
 
 // ==============================
