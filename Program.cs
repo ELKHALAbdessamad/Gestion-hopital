@@ -9,10 +9,28 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 // ==============================
-// DB Context
+// DB Context - Support PostgreSQL et SQL Server
 // ==============================
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+    ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    // Détection automatique du type de base de données
+    if (!string.IsNullOrEmpty(connectionString) && 
+        (connectionString.Contains("postgres") || connectionString.Contains("DATABASE_URL")))
+    {
+        // PostgreSQL (Railway, Render, etc.)
+        options.UseNpgsql(connectionString);
+        Console.WriteLine("✅ Utilisation de PostgreSQL");
+    }
+    else
+    {
+        // SQL Server (Azure, Local)
+        options.UseSqlServer(connectionString);
+        Console.WriteLine("✅ Utilisation de SQL Server");
+    }
+});
 
 // ==============================
 // Identity
